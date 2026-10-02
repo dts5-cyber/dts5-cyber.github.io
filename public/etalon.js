@@ -24,11 +24,6 @@ class Component extends PageLogic {
       if (!el) return;
       var rc = el.getBoundingClientRect();
       var hp = Math.max(0, Math.min(1, (84 - rc.top) / Math.max(1, rc.height - h + 84)));
-      var v = document.getElementById('etVideo');
-      if (v && v.duration && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        var t = Math.max(0, Math.min(1, (hp - 0.12) / 0.84)) * (v.duration - 0.05);
-        if (Math.abs(v.currentTime - t) > 0.01) v.currentTime = t;
-      }
       var st = document.getElementById('svcStack'), sp = 0;
       if (st) { var rs = st.getBoundingClientRect(); sp = Math.max(0, Math.min(1, (84 - rs.top) / Math.max(1, rs.height - h + 84))); }
       var rl = document.getElementById('abReelSec'), rp = 0;
