@@ -25,7 +25,7 @@ class Component extends PageLogic {
       var rc = el.getBoundingClientRect();
       var hp = Math.max(0, Math.min(1, (84 - rc.top) / Math.max(1, rc.height - h + 84)));
       var v = document.getElementById('etVideo');
-      if (v && v.duration) {
+      if (v && v.duration && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         var t = Math.max(0, Math.min(1, (hp - 0.16) / 0.66)) * Math.min(3.7, v.duration - 0.05);
         if (Math.abs(v.currentTime - t) > 0.01) v.currentTime = t;
       }

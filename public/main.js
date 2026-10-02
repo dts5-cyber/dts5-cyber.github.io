@@ -27,7 +27,7 @@ class Component extends PageLogic {
       var y = window.scrollY || document.documentElement.scrollTop || 0;
       var h = window.innerHeight || 900;
       var v = document.getElementById('heroVideo');
-      if (v && v.duration) {
+      if (v && v.duration && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         var t = Math.max(0, Math.min(1, y / h / 1.3)) * (v.duration - 0.05);
         if (Math.abs(v.currentTime - t) > 0.01) v.currentTime = t;
       }

@@ -10,7 +10,7 @@ for(const name of Object.keys(routes)){
  source=source.replaceAll('70 лет экспертизы','Почти 70 лет экспертизы');
  const {document}=parseHTML(source);const script=document.querySelector('script[data-dc-script]');
  const props=Object.fromEntries(Object.entries(JSON.parse(script.getAttribute('data-props')||'{}')).filter(([k,v])=>v.default!==undefined).map(([k,v])=>[k,v.default]));
- let logic=script.textContent;
+ let logic=script.textContent.replaceAll('if (v && v.duration)', 'if (v && v.duration && !window.matchMedia("(prefers-reduced-motion: reduce)").matches)');
  const context={DCLogic:class{constructor(props){this.props=props;}setState(s){Object.assign(this.state,s);}},window:{innerHeight:900,innerWidth:1440,scrollY:0},document:{getElementById:()=>null,querySelectorAll:()=>[]},console};
  vm.createContext(context);vm.runInContext(logic+';globalThis.Page=Component',context);const page=new context.Page(props);const vals=page.renderVals();
  const css=document.querySelector('style').textContent;const root=document.querySelector('x-dc');root.querySelector('helmet')?.remove();root.querySelector('script')?.remove();
