@@ -1,0 +1,1 @@
+{"name":"rttec-redesign","version":"1.0.0","private":true,"type":"module","scripts":{"build":"node scripts/convert.mjs && astro build","dev":"astro dev --host 127.0.0.1","preview":"astro preview --host 127.0.0.1"},"dependencies":{"astro":"7.3.5","linkedom":"0.18.12"}}

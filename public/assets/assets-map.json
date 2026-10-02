@@ -1,0 +1,130 @@
+{
+  "214e87b3650720c70948a57c8103fea2": {
+    "file": "assets/logo_white.png",
+    "role": "Логотип «Ростех Техприёмка» (белый) — шапка/подвал всех страниц"
+  },
+  "e4d09a1514028a1852cc01e1b5388bb7": {
+    "file": "assets/logo_scrub.mp4",
+    "role": "Главная: hero-видео со сборкой логотипа, перематывается скроллом"
+  },
+  "96a495f69c0f48df1b57f6b091011a9f": {
+    "file": "assets/logo_poster.jpg",
+    "role": "Главная: постер hero-видео"
+  },
+  "935805f6622f043c90344ce79d7ea785": {
+    "file": "assets/card1.webp",
+    "role": "Главная: карточка «Развивать»"
+  },
+  "3a88d04bc333639e935f6d881e67abec": {
+    "file": "assets/card2.webp",
+    "role": "Главная: карточка «Контролировать»"
+  },
+  "79297c67a66e2f6292f98038791b09f4": {
+    "file": "assets/card3.webp",
+    "role": "Главная: карточка «Обеспечивать»"
+  },
+  "3784ea8cf3a9629f2568c838b8046494": {
+    "file": "assets/case1.webp",
+    "role": "Главная: кейс Аэрокон (демо)"
+  },
+  "c86716236b9a30deee61fbc84ddf9f6a": {
+    "file": "assets/case2.webp",
+    "role": "Главная: кейс Сталь-Меридиан (демо)"
+  },
+  "6bc05a508f4d48140a41280239223659": {
+    "file": "assets/case3.webp",
+    "role": "Главная: кейс Кварта-Электроника (демо)"
+  },
+  "6740573992e95001175606faffbade15": {
+    "file": "assets/logo_aerokon.png",
+    "role": "Главная: вымышленный логотип клиента (демо)"
+  },
+  "21bf8065a7fe0de5c17fb3a7302359da": {
+    "file": "assets/logo_stal.png",
+    "role": "Главная: вымышленный логотип клиента (демо)"
+  },
+  "e8c52f797e5234b58eea3407f7a82da8": {
+    "file": "assets/logo_kvarta.png",
+    "role": "Главная: вымышленный логотип клиента (демо)"
+  },
+  "45b0d151765759566a834201e7e92c75": {
+    "file": "assets/etalon_hero.mp4",
+    "role": "Эталон: hero-видео 15,6 с, 6 сцен −196…+1700 °C, перематывается скроллом"
+  },
+  "671dc6540cd0f6060809bf8ac4a3cbca": {
+    "file": "assets/etalon_hero_poster.jpg",
+    "role": "Эталон: постер hero-видео"
+  },
+  "0b15a5349266616e654dea8106c4f508": {
+    "file": "assets/foundry_bw.webp",
+    "role": "Эталон: «О предприятии» — ч/б литейный цех"
+  },
+  "e141e28bb5964315a6fb31d8668422ce": {
+    "file": "assets/ab1.webp",
+    "role": "Эталон: КБ (запасные варианты блока «О предприятии»)"
+  },
+  "c338e45718afa7d50cec2686552968c1": {
+    "file": "assets/ab2.webp",
+    "role": "Эталон: лаборатория микроэлектроники (запасные варианты)"
+  },
+  "2cc987900d350f216fc43693d637cefa": {
+    "file": "assets/ab3.webp",
+    "role": "Эталон: гальванический цех (запасные варианты)"
+  },
+  "16c9b4ffc64b012eff3963b9542db7f0": {
+    "file": "assets/ab4.webp",
+    "role": "Эталон: поверочная лаборатория (запасные варианты)"
+  },
+  "8c6ede77dcd78ce87c420f900538855f": {
+    "file": "assets/etalon_svc1.webp",
+    "role": "Эталон: карточка услуги «Датчики»"
+  },
+  "54ac013e58841990b0426934b84bb039": {
+    "file": "assets/etalon_svc2.webp",
+    "role": "Эталон: карточка услуги «Оборудование»"
+  },
+  "509f38bd4d07eac77604a692eb649fab": {
+    "file": "assets/etalon_svc3.webp",
+    "role": "Эталон: карточка услуги «Мониторинг»"
+  },
+  "78f68fbbc799c0d8d1f698ec0cfd436d": {
+    "file": "assets/etalon_case1.webp",
+    "role": "Эталон: кейс «Металлургический комбинат» (демо)"
+  },
+  "d7239d7431d4011df828bb52f2c5d8a3": {
+    "file": "assets/etalon_case2.webp",
+    "role": "Эталон: кейс «Производитель техгазов» (демо)"
+  },
+  "de0c9340e3a9e076978d1a00dc2db131": {
+    "file": "assets/etalon_case3.webp",
+    "role": "Эталон: кейс «Машиностроительный завод» (демо)"
+  },
+  "14821d368a9c98a265191ecac9f5ea72": {
+    "file": "assets/quality_hero.mp4",
+    "role": "Кволити+: hero-видео «печать соответствия», перематывается скроллом (0–3,7 с)"
+  },
+  "cce6d4a15a774046998526e747974a7a": {
+    "file": "assets/quality_hero_poster.jpg",
+    "role": "Кволити+: постер hero-видео"
+  },
+  "e61049e4dd38857908ba397161b31430": {
+    "file": "assets/quality_about_bw.webp",
+    "role": "Кволити+: «О компании» — ч/б инженер с планшетом"
+  },
+  "45bbab713bb4708e96f29f8c72f579fe": {
+    "file": "assets/quality_svc1.webp",
+    "role": "Кволити+: Системы менеджмента"
+  },
+  "51cba023917319c5995236f32b909a09": {
+    "file": "assets/quality_svc2.webp",
+    "role": "Кволити+: Продукция"
+  },
+  "a228e20e988344210b6dcbd016e2d37c": {
+    "file": "assets/quality_svc3.webp",
+    "role": "Кволити+: Экология"
+  },
+  "e4e41f26fd7079978f213a59450970f8": {
+    "file": "assets/quality_svc4.webp",
+    "role": "Кволити+: Обучение"
+  }
+}

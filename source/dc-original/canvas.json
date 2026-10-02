@@ -1,0 +1,115 @@
+{
+  "v": 3,
+  "attachments": {},
+  "boards": {
+    "Etalon.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "page": "dir",
+      "title": "Направление — НПП «Эталон» (шаблон AIDA)",
+      "w": 1440,
+      "x": 0,
+      "y": 0,
+      "expand": "fill"
+    },
+    "Hub-v1.dc.html": {
+      "h": 8000,
+      "is_interactive": true,
+      "page": "v1",
+      "title": "Главная v1 — хаб, десктоп",
+      "w": 1440,
+      "x": 0,
+      "y": 0
+    },
+    "Main.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "is_interactive": true,
+      "page": "v2",
+      "title": "Главная v2 — сцена со скроллом",
+      "w": 1440,
+      "x": 0,
+      "y": 0
+    },
+    "Mega.dc.html": {
+      "h": 760,
+      "page": "v1",
+      "title": "v1 — мега-меню «Услуги»",
+      "w": 1440,
+      "x": 1520,
+      "y": 0
+    },
+    "Mobile.dc.html": {
+      "h": 3780,
+      "page": "v1",
+      "title": "v1 — мобильная 390",
+      "w": 390,
+      "x": 1520,
+      "y": 880
+    },
+    "Quality.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "page": "dir",
+      "title": "Направление — «Кволити+» (сертификация)",
+      "w": 1440,
+      "x": 1520,
+      "y": 0,
+      "expand": "fill"
+    },
+    "Supply.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "page": "dir",
+      "title": "Направление — «РТ-Техпоставка» (снабжение)",
+      "w": 1440,
+      "x": 3040,
+      "y": 0,
+      "expand": "fill"
+    }
+  },
+  "createdOnFiles": {
+    "at": "2026-09-23T12:56:02Z",
+    "v": 1
+  },
+  "designSystems": [],
+  "launch": {
+    "file": "Main.dc.html",
+    "view": "focused"
+  },
+  "notes": {
+    "title": {
+      "kind": "title1",
+      "maxW": 2960,
+      "page": "v1",
+      "text": "rttec.ru — главная-хаб, редизайн",
+      "w": 240,
+      "x": 0,
+      "y": -320
+    }
+  },
+  "order": [
+    "Main.dc.html",
+    "Etalon.dc.html",
+    "Quality.dc.html",
+    "Supply.dc.html",
+    "Hub-v1.dc.html",
+    "Mega.dc.html",
+    "Mobile.dc.html"
+  ],
+  "pages": [
+    {
+      "id": "v2",
+      "name": "v2 — сцена"
+    },
+    {
+      "id": "dir",
+      "name": "Направления"
+    },
+    {
+      "id": "v1",
+      "name": "v1 — хаб"
+    }
+  ],
+  "title": "Главная rttec.ru — макет"
+}

@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>rttec.ru — передача в Claude Code</title>
+<style>
+:root{--bg:#0D0D0E;--card:#141415;--line:#2C2C2E;--fg:#F4F3EF;--mute:rgba(244,243,239,.66);--cu:#F19E65;--cu2:#FFD190}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 -apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+.wrap{max-width:980px;margin:0 auto;padding:56px 24px 96px}
+h1{font-size:clamp(30px,5vw,48px);line-height:1.05;letter-spacing:-.03em;margin:0 0 14px}
+h2{font-size:26px;letter-spacing:-.02em;margin:64px 0 16px;padding-top:24px;border-top:1px solid var(--line)}
+h3{font-size:19px;margin:28px 0 8px}
+p,li{color:var(--mute)} b,strong{color:var(--fg)}
+a{color:var(--cu2)}
+code,pre{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:14px}
+code{background:#1B1B1D;padding:1px 6px;border-radius:4px;color:var(--fg)}
+pre{background:#121213;border:1px solid var(--line);border-radius:10px;padding:18px;overflow-x:auto;white-space:pre-wrap;color:var(--fg);line-height:1.5}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:15px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--mute);font-weight:500}
+td{color:var(--fg)}
+.lead{font-size:19px;color:var(--mute);max-width:62ch}
+.steps{counter-reset:s;list-style:none;padding:0}
+.steps li{counter-increment:s;position:relative;padding:14px 0 14px 52px;border-top:1px solid var(--line)}
+.steps li::before{content:counter(s);position:absolute;left:0;top:12px;width:34px;height:34px;border-radius:50%;background:var(--cu);color:#0D0D0E;font-weight:600;display:flex;align-items:center;justify-content:center}
+.warn{border:1px solid rgba(241,158,101,.4);background:rgba(241,158,101,.08);border-radius:10px;padding:14px 18px;margin:16px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.grid figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.grid img{width:100%;display:block}
+.grid figcaption{padding:10px 12px;font-size:13px;color:var(--mute)}
+.tag{display:inline-block;font-size:12px;padding:2px 8px;border-radius:4px;background:#1F1F21;color:var(--mute);margin-right:6px}
+button.copy{float:right;background:var(--fg);color:#0D0D0E;border:0;border-radius:4px;padding:6px 12px;font-weight:600;cursor:pointer}
+@media (max-width:640px){.wrap{padding:36px 16px 72px}th,td{padding:7px 6px;font-size:14px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>Редизайн rttec.ru — пакет для Claude Code</h1>
+<p class="lead">Сводка всего, что сделано в чате с Claude: решения, структура страниц, механики анимаций, ассеты, открытые вопросы и готовый промт для переноса макета в код и деплоя.</p>
+<p><span class="tag">Заказчик: АО «РТ-Техприёмка», ГК «Ростех»</span><span class="tag">Обновлено: 2 октября 2026</span></p>
+
+<div class="warn"><b>Важно:</b> это сайт РТ-Техприёмки, не «РТ-Центр инжиниринга» (ЦИ). Брендинг и тексты ЦИ здесь не применять.</div>
+
+<h2>1. Как перенести проект в Claude Code</h2>
+<ol class="steps">
+<li><b>Распакуйте архив</b> в новую папку, например <code>rttec-redesign/</code>. Внутри: этот файл, <code>CLAUDE.md</code>, <code>source/</code>, <code>assets/</code>, <code>content/</code>, <code>previews/</code>.</li>
+<li><b>Откройте папку в Claude Code</b> (терминал: <code>cd rttec-redesign && claude</code>, или в десктоп-приложении → вкладка Code → выбрать папку). <code>CLAUDE.md</code> подхватится автоматически — там сжатый контекст проекта.</li>
+<li><b>Вставьте стартовый промт</b> из раздела 7 этого документа. Claude Code соберёт проект (Astro), перенесёт главную и три страницы направлений, подключит ассеты.</li>
+<li><b>Проверьте локально</b>: <code>npm run dev</code> → откройте в браузере, прокрутите все scroll-сцены. Сверяйте с превью в папке <code>previews/</code> и с живым макетом.</li>
+<li><b>Git и деплой</b>: попросите Claude Code создать репозиторий на GitHub (<code>gh repo create</code>) и подключить Vercel или Netlify (бесплатно, статикой). Видео ~19 МБ суммарно — для GitHub Pages тоже подходит, Git LFS не нужен.</li>
+<li><b>Продолжайте</b> оставшиеся страницы направлений по шаблону (раздел 6) — в том же репозитории.</li>
+</ol>
+
+<h3>Ссылки на материалы в Claude</h3>
+<table>
+<tr><th>Что</th><th>Ссылка</th></tr>
+<tr><td>Живой макет (все страницы, вкладки v2 / Направления / v1)</td><td><a href="https://claude.ai/artifact/LerVHXGzpLxREFnhBriDxV">claude.ai/artifact/LerVHXGzpLxREFnhBriDxV</a></td></tr>
+<tr><td>Исследование, CJM и структура сайта</td><td><a href="https://claude.ai/artifact/1J1MLU1Dz1oEuui5vgp1Tm">claude.ai/artifact/1J1MLU1Dz1oEuui5vgp1Tm</a></td></tr>
+<tr><td>CJM-карта РТ-Техприёмки</td><td><a href="https://claude.ai/artifact/XYW5iyJWJUhYYfhFKs951x">claude.ai/artifact/XYW5iyJWJUhYYfhFKs951x</a></td></tr>
+</table>
+
+<h2>2. Состав пакета</h2>
+<table>
+<tr><th>Папка / файл</th><th>Содержимое</th></tr>
+<tr><td><code>CLAUDE.md</code></td><td>Контекст для Claude Code: страницы, формат исходников, токены, механики, ограничения.</td></tr>
+<tr><td><code>source/dc-local/</code></td><td>Исходники страниц (.dc.html) с путями к ассетам, заменёнными на <code>../../assets/…</code>. <b>Работать с этими.</b></td></tr>
+<tr><td><code>source/dc-original/</code></td><td>Те же файлы как в макете (пути <code>/_blob/&lt;id&gt;</code>) + <code>canvas.json</code>.</td></tr>
+<tr><td><code>assets/</code></td><td>32 файла: фото (webp), логотипы, 3 видео для скролл-сцен, постеры. <code>assets-map.json</code> — какой файл где используется.</td></tr>
+<tr><td><code>content/</code></td><td>Исходные тексты заказчика: Эталон, РТ-Техпоставка (тексты Кволити+ — в разделе 5 ниже).</td></tr>
+<tr><td><code>previews/</code></td><td>Скриншоты ключевых состояний — эталон для сверки после переноса.</td></tr>
+</table>
+
+<h2>3. Как устроены исходники .dc.html</h2>
+<p>Формат Claude Design: обычный HTML + мини-шаблонизатор + класс логики. Переводится в любой фреймворк почти механически.</p>
+<ul>
+<li>Разметка — внутри <code>&lt;x-dc&gt;…&lt;/x-dc&gt;</code>; глобальный CSS — в <code>&lt;helmet&gt;&lt;style&gt;</code>.</li>
+<li><code>{{name}}</code> — значение из <code>renderVals()</code> (часто это строка inline-стиля, вычисленная от прогресса скролла).</li>
+<li><code>&lt;sc-if value="{{flag}}"&gt;</code> — условный блок; <code>&lt;sc-for list="{{arr}}" as="x"&gt;</code> — цикл.</li>
+<li>Логика: <code>class Component extends DCLogic</code> — <code>state</code>, <code>setState</code>, <code>componentDidMount</code> (вешает <code>scroll</code> через <code>requestAnimationFrame</code>), <code>renderVals()</code>.</li>
+<li><code>data-props</code> — «твики» с вариантами блоков. <b>Утверждены значения default</b>; ветки других вариантов можно не переносить.</li>
+<li>Межстраничные ссылки <code>href="Etalon.dc.html"</code> → роуты сайта.</li>
+</ul>
+
+<h3>Утверждённые варианты (default твиков)</h3>
+<table>
+<tr><th>Страница</th><th>Твик</th><th>Утверждено</th></tr>
+<tr><td>Главная</td><td>cards / verbs / cta / headerCta</td><td>C — фото на всю карточку / Медь из херо / Контур / Квадрат (контурный)</td></tr>
+<tr><td>Эталон</td><td>about / services / imp</td><td>Сцена: фото → карточки / Карточка на экран / Сканер замены</td></tr>
+<tr><td>Кволити+, Техпоставка</td><td>—</td><td>варианты уже зафиксированы в коде, твиков нет</td></tr>
+</table>
+
+<h2>4. Дизайн-система</h2>
+<table>
+<tr><th>Токен</th><th>Значение</th></tr>
+<tr><td>Фон / подвал</td><td><code>#0D0D0E</code> / <code>#0A0A0B</code></td></tr>
+<tr><td>Текст / приглушённый</td><td><code>#F4F3EF</code> / <code>rgba(244,243,239,.6–.72)</code></td></tr>
+<tr><td>Линии / карточки</td><td><code>#2C2C2E</code> / <code>#121213</code></td></tr>
+<tr><td>Медный акцент</td><td>градиент <code>#FFF1E2 → #FFD190 → #F19E65 → #B05A33</code> (класс <code>.cu</code>), одиночный <code>#F19E65</code></td></tr>
+<tr><td>Цвета кросс-продаж</td><td>Автоматизация — сталь-синий, Сертификация — серебро, Метрология — медь, Снабжение — бронза, Полиграфия — белый</td></tr>
+<tr><td>Шрифт</td><td>Onest 400/500/600 (Google Fonts). Без капса в заголовках, акцент — медным градиентом на ключевых словах</td></tr>
+<tr><td>Кнопки</td><td>контурные, радиус 4px; квадрат со стрелкой ↗ для ссылок; в шапке — контурный квадрат</td></tr>
+<tr><td>Сетка</td><td>поля 4vw, сетки 12 колонок, шапка 84px sticky с blur</td></tr>
+</table>
+
+<h2>5. Страницы и решения</h2>
+
+<h3>Главная (Main.dc.html) — тёмная scroll-сцена</h3>
+<ul>
+<li><b>Hero:</b> видео со сборкой логотипа из стеклянных кубов (<code>logo_scrub.mp4</code>) перематывается скроллом. Логотип и меню в шапке появляются, когда кубы «приходят» на место.</li>
+<li><b>Интро:</b> «Развиваем производство, контролируем качество, обеспечиваем предприятия всем необходимым — для технологического будущего промышленности». Глаголы выделены медным градиентом из цвета hero; слова проявляются при скролле. Капс и подчёркивание отклонены.</li>
+<li><b>Три направления:</b> карточки «Развивать / Контролировать / Обеспечивать» — фото на всю карточку, по одной на экран, со ссылками на 9 направлений (Эталон, Сертификация, Снабжение уже ведут на свои страницы).</li>
+<li><b>География:</b> три режима (приёмки, регионы, представительства); кнопка «Подобрать решение» под цифрами.</li>
+<li><b>«Нам доверяют»:</b> сетка логотипов, клик раскрывает кейс (задача / решение / результат, 2 цифры). Клиенты и цифры — демо.</li>
+<li><b>Форма:</b> «Подберём решение под вашу задачу», без шагов и выбора направлений, валидация полей и согласия.</li>
+<li><b>Подвал:</b> Техприёмка (История, СМК, Раскрытие информации, Закупки, Кадровая политика, Противодействие коррупции), Решения для бизнеса (9 направлений), Пресс-центр, Карьера, Контакты. Без кнопки заявки.</li>
+</ul>
+
+<h3>Шаблон страницы направления (AIDA) — на примере Эталона</h3>
+<table>
+<tr><th>#</th><th>Блок</th><th>Механика</th></tr>
+<tr><td>1</td><td>Hero</td><td>Видео 15,6 с (6 сцен, −196 → −40 → +90 → +500 → +1500 → +1700 °C) скрабится скроллом; слева счётчик температуры и подпись сцены, внизу шкала до +2500, на финале подсвечивается «Излучатели АЧТ». H1 и кнопки появляются анимацией на старте.</td></tr>
+<tr><td>2</td><td>О предприятии</td><td>Ч/б фото литейного цеха на весь экран с заголовком «Мы создаём эталоны точности для всей промышленности России с 1957 года» → сжимается влево; справа 3 компактные карточки въезжают по очереди: 70 лет экспертизы / Специализированные компетенции / Полный производственный цикл.</td></tr>
+<tr><td>3</td><td>Три направления</td><td>Стопка карточек на экран (Датчики / Оборудование / Мониторинг), стеклянные кнопки-продукты.</td></tr>
+<tr><td>4</td><td>Импортозамещение</td><td>«Сканер замены»: 4 замены (Rosemount 214C, WIKA TC10-B, WIKA TC83, JUMO 902005/40 → аналоги Эталона), своя схема датчика у каждой, таблица характеристик, ↑ = лучше оригинала.</td></tr>
+<tr><td>5</td><td>Кейсы</td><td>3 предприятия-ячейки, переключение кейса с фото; ссылка «Смотреть все кейсы на сайте «Эталон»».</td></tr>
+<tr><td>6</td><td>FAQ</td><td>Аккордеон 6 вопросов, слева «Задать вопрос».</td></tr>
+<tr><td>7</td><td>Форма</td><td>«Подберём решение под вашу задачу».</td></tr>
+<tr><td>8</td><td>Кросс-продажи</td><td>«Закроем задачу целиком, а не только датчиками» — бенто 5 цветных карточек-вопросов в один экран + ссылки на прочие направления.</td></tr>
+<tr><td>9</td><td>Подвал</td><td>Как на главной.</td></tr>
+</table>
+<p>Блок «Почему выбирают» на Эталоне удалён (аргументы уже раскрыты выше). На Кволити+ и Техпоставке он остался — kinetic-экраны крупным шрифтом.</p>
+
+<h3>Кволити+ (Quality.dc.html) — сертификация</h3>
+<ul>
+<li>Hero: видео «печать соответствия» опускается при скролле, слева 6 этапов сертификации → финал «Соответствует ✓».</li>
+<li>О компании: ч/б фото инженера; карточки «Аккредитованный орган / Более 10 лет практики / Четыре задачи в одном окне».</li>
+<li>4 направления стопкой с фото: Системы менеджмента, Продукция, Экология, Обучение. Табло стандартов ISO 9001/14001/45001, ГОСТ Р, СДС «РОСТЕХ». 5 аргументов, FAQ, форма, кросс-продажи (карточка Эталона вместо сертификации).</li>
+<li>Исходный текст заказчика: H1 «Сертификация, экологическое сопровождение и обучение для предприятий России»; работает с 2015 г.; аккредитованный орган; 23 аттестационных эксперта; учебный центр (лицензия Рособрнадзора, 45+ программ, 1200+ выпускников за 7 лет); лицензия ФСБ на гостайну; CTA «Получить консультацию», «Проверить документ в реестре».</li>
+</ul>
+
+<h3>РТ-Техпоставка (Supply.dc.html) — снабжение</h3>
+<ul>
+<li>Hero без видео: анимированная карточка «Статус поставки» (этапы загораются по очереди). Предложен сюжет видео — пролёт по складу (промты были в чате).</li>
+<li>О компании: placeholder-градиент вместо фото; 6 направлений поставки стопкой (иконки вместо фото); табло «Как идёт поставка» (5 этапов); 5 аргументов; FAQ; форма; кросс-продажи.</li>
+<li>Фото для всех блоков ещё не сгенерированы — промты есть в истории чата и в разделе 8.</li>
+</ul>
+
+<h2>6. Открытые вопросы и заглушки (сверить до запуска)</h2>
+<table>
+<tr><th>Где</th><th>Что проверить / заменить</th></tr>
+<tr><td>Все страницы</td><td>Фото сгенерированы ИИ — по возможности заменить реальными съёмками.</td></tr>
+<tr><td>Главная</td><td>Кейсы и логотипы клиентов (Аэрокон, Сталь-Меридиан, Кварта-Электроника) — вымышленные. «[Адрес головного офиса]» в подвале. Подписи направлений «[Одна строка о направлении]».</td></tr>
+<tr><td>Эталон</td><td>«70 лет экспертизы» — в 2026 г. прошло 69 (если не к юбилею 2027 — «почти 70»). Характеристики в сканере замены — условные; модель для Rosemount 214C без номера. Кейсы — демо. URL сайта Эталона и страницы кейсов — заглушки <code>#</code>. Лицензия Ростехнадзора: точная формулировка. FAQ: срок «от [2–4] недель», 44-ФЗ/223-ФЗ, отгрузка с поверкой.</td></tr>
+<tr><td>Кволити+</td><td>Этапы сертификации (типовые), срок «[1–3 месяца]» в FAQ, «Более 10 лет» (посчитано от 2015).</td></tr>
+<tr><td>Техпоставка</td><td>Описания этапов поставки и ответы FAQ — сформулированы по смыслу; позиция в карточке статуса вымышленная; фото/видео нет.</td></tr>
+<tr><td>Кросс-продажи</td><td>Ссылки на ещё не сделанные направления — <code>#</code>.</td></tr>
+<tr><td>Техника</td><td>Мобильная версия не сверстана (v2). Форма никуда не отправляет — нужен обработчик (email/CRM). Пользователь — маркетолог ЦИ; Bitrix24/Airtable как приёмник заявок обсудить.</td></tr>
+</table>
+
+<h2>7. Стартовый промт для Claude Code</h2>
+<p>Скопируйте целиком в первый запрос в Claude Code, открытом в папке пакета.</p>
+<button class="copy" onclick="navigator.clipboard.writeText(document.getElementById('prompt').innerText);this.textContent='Скопировано'">Копировать</button>
+<pre id="prompt">Прочитай CLAUDE.md и README-HANDOFF.html — это перенос макета сайта rttec.ru (АО «РТ-Техприёмка») из Claude Design в код.
+
+Задача:
+1. Создай проект на Astro (TypeScript, без UI-библиотек) в этой папке: src/pages, src/components, src/styles, public/assets (скопируй assets/ туда).
+2. Перенеси 4 страницы из source/dc-local/: Main.dc.html → /, Etalon.dc.html → /solutions/etalon, Quality.dc.html → /solutions/quality, Supply.dc.html → /solutions/supply. Hub-v1, Mega, Mobile — архив, не переносить.
+3. Для каждой страницы бери только утверждённые варианты блоков (default в data-props), остальные ветки sc-if выкидывай.
+4. Логику renderVals/onScroll перенеси в небольшие клиентские скрипты (vanilla TS) по компонентам: ScrollVideoHero, AboutScene, ServicesStack, ImportScanner, KineticWhy, CasesSwitcher, Faq, ContactForm, CrossSellBento, Header, Footer. Расчёт прогресса скролла и все тайминги сохрани 1:1.
+5. Общие токены (цвета, медный градиент .cu, Onest, отступы) — в src/styles/tokens.css. Шапку и подвал сделай общими компонентами.
+6. Тексты переноси дословно. Ссылки между страницами — на новые роуты.
+7. Добавь prefers-reduced-motion, корректные alt, мета-теги и OG для каждой страницы.
+8. Сверь результат с previews/*.png (сделай скриншоты Playwright тех же состояний и покажи различия).
+9. Инициализируй git, сделай коммит, затем помоги задеплоить: GitHub-репозиторий + Vercel (или Netlify).
+
+Работай поэтапно: сначала каркас и главная, покажи результат, потом страницы направлений.</pre>
+
+<h2>8. Хронология и ключевые решения (выжимка чата)</h2>
+<ol>
+<li><b>Исследование и структура</b> — Docs-артефакт с анализом, CJM и структурой; светлая концепция v1 (хаб, мега-меню, мобильная) — затем отказ в пользу тёмной «WOW»-сцены v2.</li>
+<li><b>Главная v2</b> — hero-видео со сборкой логотипа, интро с медными глаголами (подобраны из цвета hero), карточки направлений, география, «Нам доверяют» с кейсами, форма без шагов, подвал с 4 колонками, шапка появляется вместе с логотипом, контурный квадрат-CTA.</li>
+<li><b>Шаблон направления по AIDA</b> на Эталоне: видео датчика → новое видео «от холода к жару» из 6 сцен; «О предприятии» прошло мозаику → сцену по референсу Sibex (фото сжимается, карточки справа) → миссия перенесена в заголовок сцены, карточки сделаны компактными в один экран.</li>
+<li><b>Импортозамещение</b>: табло «было/стало» → таблица/карточки → табло-перевёртыш → выбран «Сканер замены» со схемами и таблицей характеристик (↑ лучше).</li>
+<li><b>Аргументы</b>: 4 варианта → «крупно по одному» с формулировками-действиями → на Эталоне блок убран.</li>
+<li><b>Кейсы, FAQ, кросс-продажи</b>: кейсы в формате главной; FAQ перед формой; кросс-продажи — бенто с вопросами-заголовками, цвета по направлениям, в один экран.</li>
+<li><b>Кволити+</b> и <b>РТ-Техпоставка</b> собраны по шаблону; у Кволити+ своё видео «печать соответствия».</li>
+<li><b>Предпочтения заказчика</b>: никакого капса; медь — единственный акцент; лаконичные тексты, без «воды»; демо-данные явно помечать; варианты предлагать на выбор, затем фиксировать один.</li>
+</ol>
+
+<h2>9. Превью</h2>
+<div class="grid">
+<figure><img src="previews/main-01-overview.png" alt="Главная: hero, интро и карточки направлений"><figcaption>Главная: hero, интро, направления</figcaption></figure>
+<figure><img src="previews/etalon-01-hero-6-scenes.png" alt="Эталон: hero, шесть сцен"><figcaption>Эталон: hero, 6 сцен</figcaption></figure>
+<figure><img src="previews/etalon-02-about-scene.png" alt="Эталон: сцена О предприятии"><figcaption>Эталон: «О предприятии»</figcaption></figure>
+<figure><img src="previews/etalon-03-import-scanner.png" alt="Эталон: сканер замены"><figcaption>Эталон: сканер замены</figcaption></figure>
+<figure><img src="previews/etalon-04-scanner-table.png" alt="Эталон: таблица характеристик"><figcaption>Эталон: таблица характеристик</figcaption></figure>
+<figure><img src="previews/etalon-05-cases.png" alt="Эталон: кейсы"><figcaption>Эталон: кейсы</figcaption></figure>
+<figure><img src="previews/etalon-06-crosssell.png" alt="Эталон: кросс-продажи"><figcaption>Эталон: кросс-продажи</figcaption></figure>
+<figure><img src="previews/quality-01-hero.png" alt="Кволити+: hero"><figcaption>Кволити+: hero</figcaption></figure>
+<figure><img src="previews/quality-02-overview.png" alt="Кволити+: обзор"><figcaption>Кволити+: обзор</figcaption></figure>
+<figure><img src="previews/quality-03-photos.png" alt="Кволити+: фото"><figcaption>Кволити+: фото в блоках</figcaption></figure>
+<figure><img src="previews/supply-01-overview.png" alt="РТ-Техпоставка: обзор"><figcaption>РТ-Техпоставка: обзор</figcaption></figure>
+</div>
+<p style="margin-top:20px">Превью в архиве сделаны упрощённым рендером без шрифтовых и видео-нюансов — эталон по ощущению и анимациям остаётся живой макет по ссылке выше.</p>
+
+</div>
+</body>
+</html>
