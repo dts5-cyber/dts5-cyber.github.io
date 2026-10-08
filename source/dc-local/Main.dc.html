@@ -84,23 +84,82 @@ textarea.inp{height:auto;min-height:92px;padding-top:14px;resize:vertical;line-h
 @keyframes fade{from{opacity:0}to{opacity:1}}
 .fadein{animation:fade 1.2s .9s both}
 @media (prefers-reduced-motion: reduce){.line>span,.fadein{animation:none}}
+.mburg{display:none;width:44px;height:44px;align-items:center;justify-content:center;border:1px solid rgba(244,243,239,.55);border-radius:4px;background:transparent;color:#F4F3EF;padding:0;cursor:pointer}
+.mmenu{display:none}
+.mml{display:flex;align-items:center;justify-content:space-between;min-height:58px;border-bottom:1px solid #2C2C2E;font-size:24px;font-weight:500;letter-spacing:-.02em;color:#F4F3EF}
+.mml:hover{text-decoration:none}
+.mOnly{display:none}
+@media (max-width: 767px){
+header{height:64px!important;padding:0 16px!important}
+header nav{gap:10px!important}
+.hnl{display:none!important}
+.mburg{display:inline-flex}
+.mmenu{display:flex}
+.mOnly{display:block}
+.mHide{display:none!important}
+.mCol{flex-direction:column!important;align-items:flex-start!important}
+[style*="position: sticky; top: 84px"]{top:64px!important}
+[style*="position: sticky"][style*="height: calc(100vh - 84px)"]{height:calc(100svh - 64px)!important}
+[style*="position: sticky; top: 120px"]{position:static!important}
+[style*="grid-template-columns: minmax(0, 6fr) minmax(0, 5fr)"],[style*="grid-template-columns: minmax(0, 5fr) minmax(0, 6fr)"],[style*="grid-template-columns: minmax(0, 7fr) minmax(0, 5fr)"],[style*="grid-template-columns: minmax(0, 4fr) minmax(0, 7fr)"],[style*="grid-template-columns: minmax(0, 5fr) minmax(0, 7fr)"],[style*="grid-template-columns: minmax(0, 3fr) minmax(0, 8fr)"]{grid-template-columns:minmax(0,1fr)!important;gap:28px!important}
+.h2{font-size:32px!important;line-height:1.04!important}
+.lead{font-size:16px!important}
+.btnF{height:52px;padding:0 22px;font-size:16px}
+.ctaC{font-size:17px}
+.glass{height:40px;padding:0 14px;font-size:14px;gap:8px}
+form [style*="grid-template-columns: repeat(2, minmax(0, 1fr))"]{grid-template-columns:minmax(0,1fr)!important}
+#contact h2{font-size:36px!important}
+#contact [style*="gap: 48px"]{gap:24px!important}
+#xsell{min-height:0!important;padding:56px 16px 40px!important}
+#xsGrid{display:flex!important;flex-direction:column!important;min-height:0!important}
+#xsGrid>a{min-height:150px}
+footer{padding:56px 16px 32px!important;gap:44px!important}
+footer img[style*="height: 52px"]{height:40px!important}
+footer [style*="font-size: 26px"]{font-size:22px!important}
+footer nav{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:28px 16px!important}
+footer nav>div[style*="span 2"]{grid-column:1/-1!important}
+}
+
+@media (max-width: 767px){
+header>a[aria-label]{width:144px!important;height:32px!important}
+#hero1 h1{font-size:38px!important}
+#directions p{font-size:25px!important;line-height:1.24!important}
+#hero1 article>div[style*="left: 2.8vw"]{left:18px!important;right:18px!important}
+#hero1 article>div[style*="top: 3.4vh"]{top:20px!important}
+#hero1 article>div[style*="bottom: 3.6vh"]{bottom:20px!important}
+#directions>div:first-child{font-size:12px!important}
+#geo{padding:64px 16px 24px!important;gap:32px!important}
+#geo h2{font-size:30px!important}
+#geo [style*="font-size: clamp(44px, 3.8vw, 72px)"]{font-size:40px!important}
+#geo [style*="font-size: 17px; line-height: 1.3"]{font-size:15px!important}
+#clients{padding:64px 16px 24px!important}
+#clients h2{font-size:34px!important}
+#clients [style*="grid-template-columns: repeat(4, minmax(0, 1fr))"]{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+#clients [style*="padding: 4vh 0 5vh"]{gap:20px!important;padding:24px 0 28px!important}
+#clients [style*="font-size: clamp(24px, 2vw, 36px)"],#clients h3{font-size:24px!important}
+#clients dl{grid-template-columns:88px minmax(0,1fr)!important;font-size:15px!important}
+#contact{padding:64px 16px!important;margin-top:24px!important}
+}
+
 </style>
 </helmet>
-<div style="width: 100%; min-width: 1024px; background: #0D0D0E; position: relative;">
+<div style="width: 100%; background: #0D0D0E; position: relative; overflow-x: clip;">
 
 <!-- Шапка -->
 <header style="position: fixed; top: 0; left: 0; right: 0; z-index: 50; height: 84px; padding: 0 4vw; display: flex; align-items: center; justify-content: space-between; {{headerBg}}">
 <a href="#" style="position: relative; display: block; width: 180px; height: 40px;" aria-label="Ростех Техприёмка, на главную"><img src="../../assets/logo_white.png" alt="" aria-hidden="true" style="{{hMark}}"><img src="../../assets/logo_white.png" alt="Ростех Техприёмка" style="{{hWord}}"></a>
 <nav aria-label="Основное меню" style="display: flex; align-items: center; gap: 40px;">
-<span style="{{hNav0}}"><a href="#" class="navlink">РТ-Техприёмка</a></span>
-<span style="{{hNav1}}"><a href="#directions" class="navlink">Решения</a></span>
-<span style="{{hNav2}}"><a href="#" class="navlink">Карьера</a></span>
-<span style="{{hNav3}}"><a href="#" class="navlink">Пресс-центр</a></span>
+<span class="hnl" style="{{hNav0}}"><a href="#" class="navlink">РТ-Техприёмка</a></span>
+<span class="hnl" style="{{hNav1}}"><a href="#directions" class="navlink">Решения</a></span>
+<span class="hnl" style="{{hNav2}}"><a href="#" class="navlink">Карьера</a></span>
+<span class="hnl" style="{{hNav3}}"><a href="#" class="navlink">Пресс-центр</a></span>
 <span style="{{hNav4}}; margin-left: -8px;"><sc-if value="{{hcText}}" hint-placeholder-val="{{ false }}"><a href="#contact" class="hbtn">Подобрать решение</a></sc-if><sc-if value="{{hcIcon}}" hint-placeholder-val="{{ true }}"><a href="#contact" class="hsq" aria-label="Подобрать решение" title="Подобрать решение"><svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 14 14 4M6 4h8v8"/></svg></a></sc-if><sc-if value="{{hcExp}}" hint-placeholder-val="{{ false }}"><a href="#contact" class="hex" aria-label="Подобрать решение"><span class="hex-t">Подобрать решение</span><span class="hex-i" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 14 14 4M6 4h8v8"/></svg></span></a></sc-if></span>
+<span style="{{hNav4}}"><button type="button" class="mburg" aria-label="Меню" aria-expanded="{{menuExp}}" onClick="{{toggleMenu}}"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="{{burgPath}}"/></svg></button></span>
 </nav>
+<sc-if value="{{menuOpen}}" hint-placeholder-val="{{ false }}"><nav class="mmenu" aria-label="Меню" style="position: absolute; top: 100%; left: 0; right: 0; height: calc(100svh - 64px); box-sizing: border-box; padding: 16px 16px 28px; background: #0D0D0E; border-top: 1px solid #1E1E20; flex-direction: column; overflow-y: auto;"><a href="#" class="mml" onClick="{{closeMenu}}">РТ-Техприёмка<span aria-hidden="true">→</span></a><a href="#directions" class="mml" onClick="{{closeMenu}}">Решения<span aria-hidden="true">→</span></a><a href="#" class="mml" onClick="{{closeMenu}}">Карьера<span aria-hidden="true">→</span></a><a href="#" class="mml" onClick="{{closeMenu}}">Пресс-центр<span aria-hidden="true">→</span></a><div style="display: flex; flex-direction: column; gap: 6px; margin-top: 28px;"><span class="cap">Телефон</span><a href="#" style="font-size: 22px; font-weight: 500;">+7 495 927-07-55</a></div><a href="#contact" class="ctaA" onClick="{{closeMenu}}" style="margin-top: auto; justify-content: center; background: #F4F3EF; color: #0D0D0E; border-color: #F4F3EF;">Подобрать решение<span aria-hidden="true">→</span></a></nav></sc-if>
 </header>
 
-<section style="height: 1000vh; position: relative;">
+<section id="hero1" style="height: 1000vh; position: relative;">
 <div style="position: sticky; top: 0; height: 100vh; overflow: hidden;">
 
 <!-- HERO: видео с логотипом, перематывается прокруткой -->
@@ -134,7 +193,7 @@ textarea.inp{height:auto;min-height:92px;padding-top:14px;resize:vertical;line-h
 <div style="position: absolute; inset: 0; background: linear-gradient(112deg, rgba(8,8,9,.82) 0%, rgba(8,8,9,.45) 30%, rgba(8,8,9,0) 55%), linear-gradient(180deg, rgba(8,8,9,.35) 0%, rgba(8,8,9,0) 28%, rgba(8,8,9,0) 50%, rgba(8,8,9,.85) 100%);"></div>
 <div style="position: absolute; left: 2.8vw; right: 2.8vw; top: 3.4vh; display: flex; justify-content: space-between; align-items: flex-start; gap: 24px;">
 <div style="display: flex; flex-direction: column; gap: 1.8vh;"><span style="font-size: 15px; font-weight: 500;">{{c.idx}} / 03</span><h2 style="{{c.cTitle}}">{{c.title}}</h2></div>
-<span style="font-size: 15px; font-weight: 500; opacity: .75; white-space: nowrap;">{{c.label}}</span>
+<span class="mHide" style="font-size: 15px; font-weight: 500; opacity: .75; white-space: nowrap;">{{c.label}}</span>
 </div>
 <div style="position: absolute; left: 2.8vw; right: 2.8vw; bottom: 3.6vh; display: flex; justify-content: space-between; align-items: flex-end; gap: 3vw;">
 <div style="display: flex; flex-direction: column; gap: 2.6vh; min-width: 0;">
@@ -467,7 +526,8 @@ class Component extends DCLogic {
       }
       var g = document.getElementById('geo'), cl = document.getElementById('clients');
       var gt = g ? g.getBoundingClientRect().top : 99999, ct = cl ? cl.getBoundingClientRect().top : 99999;
-      self.setState({ y: y, vh: h, vw: window.innerWidth || 1440, geoTop: gt, clTop: ct });
+      var vwN = window.innerWidth || 1440;
+      self.setState({ y: y, vh: h, vw: vwN, geoTop: gt, clTop: ct, menu: vwN < 768 ? self.state.menu : false });
       if (!self.state.geoSeen && gt < h * 0.55) { self.setState({ geoSeen: true }); self.runCount(); }
     });
   }
@@ -494,15 +554,21 @@ class Component extends DCLogic {
     function ease(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
     function r(n) { return Math.round(n * 1000) / 1000; }
     function lerp(a, b, t) { return a + (b - a) * t; }
+    // Телефон (< 768px): меньше шапка и логотип, отдельные отступы сцены, меню-бургер
+    var M = (this.state.vw || (typeof window !== 'undefined' ? window.innerWidth : 1440)) < 768, selfM = this;
+    var mOpen = M && !!this.state.menu;
+    var mv = { menuOpen: mOpen, menuExp: mOpen ? 'true' : 'false', burgPath: mOpen ? 'M5 5l10 10M15 5L5 15' : 'M3 7h14M3 13h14',
+      toggleMenu: function () { selfM.setState({ menu: !selfM.state.menu }); }, closeMenu: function () { selfM.setState({ menu: false }); } };
 
     // HERO: 0 → 1.3 экрана видео перематывается; затем кадр сжимается в карточку и схлопывается
-    var heroText = 'position: absolute; left: 4vw; bottom: 8vh; max-width: 44vw; z-index: 2; transform: translateY(' + r(-seg(0.6, 1.2) * 60) + 'px); opacity: ' + r(1 - seg(0.6, 1.15)) + ';';
+    var heroText = 'position: absolute; ' + (M ? 'left: 16px; right: 16px; bottom: 40px;' : 'left: 4vw; bottom: 8vh; max-width: 44vw;') + ' z-index: 2; transform: translateY(' + r(-seg(0.6, 1.2) * 60) + 'px); opacity: ' + r(1 - seg(0.6, 1.15)) + ';';
     // Переход: кадр распадается на 6 квадратов знака (как в логотипе: шаг = 1,25 стороны),
     // затем квадраты улетают в знак логотипа в шапке
     var W = this.state.vw || 1440, H = vh;
     var sq = Math.min(W, H) * 0.14, step = sq * 1.25, tot = sq + step * 2;
     var ox = W / 2 - tot / 2, oy = H / 2 - tot / 2;
-    var hsq = 40 * 54 / 200, hstep = 40 * 67.5 / 200, hx = W * 0.04, hy = 22;
+    var LH = M ? 32 : 40;
+    var hsq = LH * 54 / 200, hstep = LH * 67.5 / 200, hx = M ? 16 : W * 0.04, hy = M ? 16 : 22;
     var cells = [[0, 0], [1, 0], [2, 0], [1, 1], [2, 1], [2, 2]];
     var d = [], fLast = ease(seg(2.3 + 5 * 0.045, 2.8 + 5 * 0.045));
     cells.forEach(function (c, i) {
@@ -519,7 +585,7 @@ class Component extends DCLogic {
     var gradStyle = 'position: absolute; inset: 0; background: linear-gradient(60deg, rgba(8,8,9,.85) 0%, rgba(8,8,9,.4) 35%, rgba(8,8,9,0) 60%); opacity: ' + r(1 - k) + ';';
     // Шапка собирается из прилетевших квадратов: знак → надпись → пункты меню
     var markIn = seg(2.86, 3.02), wordIn = ease(seg(2.98, 3.4));
-    var hBase = 'position: absolute; left: 0; top: 0; height: 40px; width: auto; display: block; ';
+    var hBase = 'position: absolute; left: 0; top: 0; height: ' + LH + 'px; width: auto; display: block; ';
     var hMark = hBase + 'clip-path: inset(0 79% 0 0); opacity: ' + r(markIn) + ';';
     var hWord = hBase + 'clip-path: inset(0 ' + r((1 - wordIn) * 73) + '% 0 27%); opacity: ' + r(wordIn > 0 ? 1 : 0) + '; transform: translateX(' + r((1 - wordIn) * -14) + 'px);';
     var hNav = [0, 1, 2, 3, 4].map(function (i) {
@@ -547,7 +613,7 @@ class Component extends DCLogic {
       if (key && grad) ks += ' background: linear-gradient(100deg, ' + GR[grad] + '); background-size: 200% 100%; background-position: ' + r((1 - u) * 100) + '% 0; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;';
       return { text: w, ks: ks, style: 'opacity: ' + r(0.16 + (key ? 0.84 : 0.34) * t) + ';' + (key ? ' white-space: nowrap;' : '') };
     });
-    var introStyle = 'position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 36px; padding: 0 8vw; opacity: ' + r(seg(2.95, 3.2) * (1 - out)) + '; transform: translateY(' + r(-out * 80) + 'px); pointer-events: none;';
+    var introStyle = 'position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: ' + (M ? '24px; padding: 0 20px;' : '36px; padding: 0 8vw;') + ' opacity: ' + r(seg(2.95, 3.2) * (1 - out)) + '; transform: translateY(' + r(-out * 80) + 'px); pointer-events: none;';
 
     // КАРТОЧКИ
     var variant = this.props.cards || 'C — фото на всю карточку';
@@ -576,10 +642,10 @@ class Component extends DCLogic {
       return {
         img: 'img' + (i + 1), e: e, idx: '0' + (i + 1), title: d.title, label: d.label, text: d.text, caption: '', links: links,
         // C — фото на всю карточку
-        cWrap: 'position: absolute; left: 4vw; right: 4vw; top: calc(84px + 2vh); bottom: 3vh; border-radius: 16px; overflow: hidden; background: #141415; z-index: ' + (i + 3) + '; clip-path: inset(' + r((1 - e) * 100) + '% 0 0 0 round 16px); filter: brightness(' + r(1 - p * 0.55) + ');',
+        cWrap: 'position: absolute; ' + (M ? 'left: 12px; right: 12px; top: 74px; bottom: 14px;' : 'left: 4vw; right: 4vw; top: calc(84px + 2vh); bottom: 3vh;') + ' border-radius: 16px; overflow: hidden; background: #141415; z-index: ' + (i + 3) + '; clip-path: inset(' + r((1 - e) * 100) + '% 0 0 0 round 16px); filter: brightness(' + r(1 - p * 0.55) + ');',
         cMedia: media + ' transform: scale(' + r(1.14 - 0.14 * e) + ');',
-        cTitle: 'margin: 0; font-size: clamp(52px, 6.4vw, 124px); line-height: .92; font-weight: 500; letter-spacing: -.05em; white-space: nowrap; transform: translateY(' + r((1 - late) * 40) + 'px); opacity: ' + r(late) + ';',
-        cText: 'margin: 0; font-size: clamp(17px, 1.4vw, 22px); line-height: 1.4; max-width: 36ch; opacity: ' + r(late) + ';',
+        cTitle: 'margin: 0; font-size: ' + (M ? '34px' : 'clamp(52px, 6.4vw, 124px)') + '; line-height: .92; font-weight: 500; letter-spacing: -.05em; white-space: nowrap; transform: translateY(' + r((1 - late) * 40) + 'px); opacity: ' + r(late) + ';',
+        cText: 'margin: 0; font-size: ' + (M ? '15px' : 'clamp(17px, 1.4vw, 22px)') + '; line-height: 1.4; max-width: 36ch; opacity: ' + r(late) + ';',
         // A
         aWrap: 'position: absolute; left: 5vw; right: 5vw; top: calc(84px + 3vh); bottom: 4vh; z-index: ' + (i + 3) + '; clip-path: inset(' + r((1 - e) * 100) + '% 0 0 0 round 14px);',
         aPanel: 'position: absolute; inset: 0; box-sizing: border-box; padding: 3vh 3vw 3.5vh; background: #141415; border: 1px solid #2C2C2E; border-radius: 14px; display: grid; grid-template-rows: auto auto minmax(0, 1fr); row-gap: 2.4vh; filter: brightness(' + r(1 - p * 0.55) + ');',
@@ -701,7 +767,7 @@ class Component extends DCLogic {
         style: 'width: 10px; height: 10px; padding: 0; border-radius: 50%; cursor: pointer; border: 1.5px solid ' + (on ? accent : 'rgba(244,243,239,.75)') + '; background: ' + (on ? accent : 'transparent') + ';'
       };
     });
-    var dotsStyle = 'position: absolute; right: 2vw; top: 50%; transform: translateY(-50%); z-index: 10; display: flex; flex-direction: column; gap: 22px; opacity: ' + r(seg(4.5, 4.9)) + ';';
+    var dotsStyle = 'position: absolute; right: ' + (M ? '20px' : '2vw') + '; top: 50%; transform: translateY(-50%); z-index: 10; display: flex; flex-direction: column; gap: 22px; opacity: ' + r(seg(4.5, 4.9)) + ';';
 
     var cta = this.props.cta || 'Контур';
     // Форма заявки: валидация, экран «отправлено»
@@ -723,7 +789,7 @@ class Component extends DCLogic {
       toggleAgree: function () { selfF.setState({ agree: !selfF.state.agree }); },
       resetForm: function () { selfF.setState({ sent: false, agree: false, ferr: {} }); }
     };
-    return Object.assign(formVals, { hMark: hMark, hWord: hWord, hNav0: hNav[0], hNav1: hNav[1], hNav2: hNav[2], hNav3: hNav[3], hNav4: hNav[4], hcText: this.props.headerCta === 'Текст', hcIcon: (this.props.headerCta || 'Квадрат') === 'Квадрат', hcExp: this.props.headerCta === 'Квадрат с раскрытием', rows: rows, closeCase: closeCase, ctaA: cta === 'Контур', ctaB: cta === 'Контур + квадрат', ctaC: cta === 'Ссылка + квадрат', geo: geo, gradStyle: gradStyle, accent: accent, isA: isA, isB: isB, isC: isC, isR: isR, cards: cards, headerBg: headerBg, heroText: heroText, frameStyle: frameStyle, words: words, introStyle: introStyle, dots: dots, dotsStyle: dotsStyle });
+    return Object.assign(formVals, mv, { hMark: hMark, hWord: hWord, hNav0: hNav[0], hNav1: hNav[1], hNav2: hNav[2], hNav3: hNav[3], hNav4: hNav[4], hcText: this.props.headerCta === 'Текст', hcIcon: (this.props.headerCta || 'Квадрат') === 'Квадрат', hcExp: this.props.headerCta === 'Квадрат с раскрытием', rows: rows, closeCase: closeCase, ctaA: cta === 'Контур', ctaB: cta === 'Контур + квадрат', ctaC: cta === 'Ссылка + квадрат', geo: geo, gradStyle: gradStyle, accent: accent, isA: isA, isB: isB, isC: isC, isR: isR, cards: cards, headerBg: headerBg, heroText: heroText, frameStyle: frameStyle, words: words, introStyle: introStyle, dots: dots, dotsStyle: dotsStyle });
   }
 }
 </script>

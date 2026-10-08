@@ -7,7 +7,7 @@ const esc=s=>String(s??'').replaceAll('&','&amp;').replaceAll('"','&quot;').repl
 for(const name of Object.keys(routes)){
  let source=fs.readFileSync(`source/dc-local/${name}.dc.html`,'utf8').replaceAll('../../assets/','/assets/');
  for(const [n,r] of Object.entries(routes)) source=source.replaceAll(`${n}.dc.html`,r);
- source=source.replaceAll('70 лет экспертизы','Почти 70 лет экспертизы');
+
  const {document}=parseHTML(source);const script=document.querySelector('script[data-dc-script]');
  const props=Object.fromEntries(Object.entries(JSON.parse(script.getAttribute('data-props')||'{}')).filter(([k,v])=>v.default!==undefined).map(([k,v])=>[k,v.default]));
  let logic=script.textContent.replaceAll('if (v && v.duration)', 'if (v && v.duration && !window.matchMedia("(prefers-reduced-motion: reduce)").matches)');

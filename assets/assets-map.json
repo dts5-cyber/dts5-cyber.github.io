@@ -126,5 +126,33 @@
   "e4e41f26fd7079978f213a59450970f8": {
     "file": "assets/quality_svc4.webp",
     "role": "Кволити+: Обучение"
+  },
+  "2942258d88187a4cf2629bfc801d15d9": {
+    "file": "assets/etalon_scan_tpp2101.webp",
+    "role": "Эталон: сканер — ТПП 2101 (вместо WIKA TC84)"
+  },
+  "e17cdac7d1833575c00960f84a1a6339": {
+    "file": "assets/etalon_scan_tpr2821.webp",
+    "role": "Эталон: сканер — ТПР 2.821.005 (вместо JUMO 901110)"
+  },
+  "c42021f2a73fbd901c0a01ac49ab54b6": {
+    "file": "assets/etalon_scan_tsp9307.webp",
+    "role": "Эталон: сканер — ТСП 9307 (вместо JUMO 902004/10)"
+  },
+  "d97b0f7ac2e8a2b1e63d3aa69c864fa8": {
+    "file": "assets/etalon_svc2_equipment.webp",
+    "role": "Эталон: карточка «Оборудование»"
+  },
+  "d1d6c8d33712bf0d20c7819b4f7982b9": {
+    "file": "assets/etalon_case_chem.webp",
+    "role": "Эталон: кейс — нефтехимия"
+  },
+  "7f5d9c471e557d34f43acee30fba5432": {
+    "file": "assets/etalon_case_ship.webp",
+    "role": "Эталон: кейс — судостроение"
+  },
+  "967eea45a7a8cf94c9146f4129ef61b7": {
+    "file": "assets/etalon_case_bakery.webp",
+    "role": "Эталон: кейс — пищевая отрасль"
   }
 }

@@ -21,15 +21,22 @@ class Component extends PageLogic {
     this.raf = requestAnimationFrame(function () {
       self.raf = 0;
       var el = document.getElementById('hero'), h = window.innerHeight || 900;
+      var MM = window.innerWidth < 768, HH = MM ? 64 : 84;
+      if (MM !== !!self.state.M) { self.setState({ M: MM, menu: MM ? self.state.menu : false }); self.onScroll(); return; }
       if (!el) return;
       var rc = el.getBoundingClientRect();
-      var hp = Math.max(0, Math.min(1, (84 - rc.top) / Math.max(1, rc.height - h + 84)));
+      var hp = Math.max(0, Math.min(1, (HH - rc.top) / Math.max(1, rc.height - h + HH)));
+      var v = document.getElementById('etVideo');
+      if (v && v.duration && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        var t = Math.max(0, Math.min(1, (hp - 0.12) / 0.84)) * (v.duration - 0.05);
+        if (Math.abs(v.currentTime - t) > 0.01) v.currentTime = t;
+      }
       var st = document.getElementById('svcStack'), sp = 0;
-      if (st) { var rs = st.getBoundingClientRect(); sp = Math.max(0, Math.min(1, (84 - rs.top) / Math.max(1, rs.height - h + 84))); }
+      if (st) { var rs = st.getBoundingClientRect(); sp = Math.max(0, Math.min(1, (HH - rs.top) / Math.max(1, rs.height - h + HH))); }
       var rl = document.getElementById('abReelSec'), rp = 0;
-      if (rl) { var rr = rl.getBoundingClientRect(); rp = Math.max(0, Math.min(1, (84 - rr.top) / Math.max(1, rr.height - h + 84))); }
+      if (rl) { var rr = rl.getBoundingClientRect(); rp = Math.max(0, Math.min(1, (HH - rr.top) / Math.max(1, rr.height - h + HH))); }
       if (Math.abs(rp - (self.state.rp || 0)) > 0.001) self.setState({ rp: rp });
-      function pin(id) { var e = document.getElementById(id); if (!e) return 0; var q = e.getBoundingClientRect(); return Math.max(0, Math.min(1, (84 - q.top) / Math.max(1, q.height - h + 84))); }
+      function pin(id) { var e = document.getElementById(id); if (!e) return 0; var q = e.getBoundingClientRect(); return Math.max(0, Math.min(1, (HH - q.top) / Math.max(1, q.height - h + HH))); }
       var wl = pin('whyPin'), wk = pin('whyKinPin'), wr = [], wb = 0;
       document.querySelectorAll('.whyRow').forEach(function (e) { var q = e.getBoundingClientRect(); wr.push(Math.round(Math.max(0, Math.min(1, (h * 0.9 - q.top) / (h * 0.3))) * 1000) / 1000); });
       var bg = document.getElementById('whyBentoGrid'); if (bg) { var qb = bg.getBoundingClientRect(); wb = Math.max(0, Math.min(1, (h * 0.95 - qb.top) / (h * 0.7))); }
@@ -38,9 +45,9 @@ class Component extends PageLogic {
       var xg = document.getElementById('xsGrid'), xp = 0; if (xg) { var qx = xg.getBoundingClientRect(); xp = Math.max(0, Math.min(1, (h * 0.95 - qx.top) / (h * 0.5))); }
       if (Math.abs(xp - (self.state.xp || 0)) > 0.002) self.setState({ xp: xp });
       var asS = document.getElementById('abSceneSec'), asp = 0;
-      if (asS) { var qa = asS.getBoundingClientRect(); asp = Math.max(0, Math.min(1, (84 - qa.top) / Math.max(1, qa.height - h + 84))); }
+      if (asS) { var qa = asS.getBoundingClientRect(); asp = Math.max(0, Math.min(1, (HH - qa.top) / Math.max(1, qa.height - h + HH))); }
       if (Math.abs(asp - (self.state.asp || 0)) > 0.001) self.setState({ asp: asp });
-      var ipp = 0, ipE = document.getElementById('impPin'); if (ipE) { var qi = ipE.getBoundingClientRect(); ipp = Math.max(0, Math.min(1, (84 - qi.top) / Math.max(1, qi.height - h + 84))); }
+      var ipp = 0, ipE = document.getElementById('impPin'); if (ipE) { var qi = ipE.getBoundingClientRect(); ipp = Math.max(0, Math.min(1, (HH - qi.top) / Math.max(1, qi.height - h + HH))); }
       var itr = []; document.querySelectorAll('.impRow').forEach(function (e) { var q = e.getBoundingClientRect(); itr.push(Math.round(Math.max(0, Math.min(1, (h * 0.92 - q.top) / (h * 0.3))) * 1000) / 1000); });
       var icp = 0, icE = document.getElementById('impCards'); if (icE) { var qc = icE.getBoundingClientRect(); icp = Math.max(0, Math.min(1, (h * 0.95 - qc.top) / (h * 0.6))); }
       var itrs = itr.join(',');
@@ -58,6 +65,14 @@ class Component extends PageLogic {
 
     // «Три направления работы»: вкладки / аккордеон
     var sv = this.props.services || 'Карточка на экран', svc = this.state.svc, selfS = this, svv = {};
+    // Телефон (< 768px): отдельные стили сцен, меню-бургер
+    var M = typeof window !== 'undefined' && window.innerWidth < 768;
+    svv.isM = M; svv.isD = !M;
+    var mOpen = M && !!this.state.menu;
+    svv.menuOpen = mOpen; svv.menuExp = mOpen ? 'true' : 'false';
+    svv.burgPath = mOpen ? 'M5 5l10 10M15 5L5 15' : 'M3 7h14M3 13h14';
+    svv.toggleMenu = function () { selfS.setState({ menu: !selfS.state.menu }); };
+    svv.closeMenu = function () { selfS.setState({ menu: false }); };
     [0, 1, 2].forEach(function (i) {
       var on = svc === i;
       svv['svSel' + i] = on ? 'true' : 'false';
@@ -82,6 +97,11 @@ class Component extends PageLogic {
       svv['stT' + i] = 'margin: 0; font-size: clamp(52px, 6.4vw, 124px); line-height: .92; font-weight: 500; letter-spacing: -.05em; white-space: nowrap; transform: translateY(' + r((1 - late) * 40) + 'px); opacity: ' + r(late) + ';';
       svv['stB' + i] = 'position: absolute; left: 2.8vw; right: 2.8vw; bottom: 3.6vh; display: flex; flex-direction: column; gap: 2.6vh; opacity: ' + r(late) + '; transform: translateY(' + r((1 - late) * 16) + 'px);';
     });
+    if (M) [0, 1, 2].forEach(function (i) {
+      svv['stL' + i] = svv['stL' + i].replace('left: 4vw; right: 4vw; top: 2vh; bottom: 3vh;', 'left: 12px; right: 12px; top: 10px; bottom: 14px;');
+      svv['stB' + i] = svv['stB' + i].replace('left: 2.8vw; right: 2.8vw; bottom: 3.6vh;', 'left: 18px; right: 18px; bottom: 20px;').replace('gap: 2.6vh;', 'gap: 16px;');
+      svv['stT' + i] = svv['stT' + i].replace('clamp(52px, 6.4vw, 124px)', '46px');
+    });
     // Миссия: слова проявляются по прокрутке, как интро на главной
     var mp = this.state.mp || 0, MWN = 8;
     for (var wi = 0; wi < MWN; wi++) svv['mw' + wi] = 'opacity: ' + r(0.16 + 0.84 * clamp(mp * MWN * 1.15 - wi)) + ';';
@@ -90,7 +110,7 @@ class Component extends PageLogic {
     svv.mBtn = 'opacity: ' + r(mb) + '; transform: translateY(' + r((1 - mb) * 16) + 'px);';
     // FAQ: аккордеон, первый вопрос открыт
     var fq = this.state.fq === undefined ? 0 : this.state.fq, selfQ = this;
-    for (var qi = 0; qi < 6; qi++) (function (i) {
+    for (var qi = 0; qi < 5; qi++) (function (i) {
       var on = fq === i;
       svv['fqSel' + i] = on ? 'true' : 'false';
       svv['fqPick' + i] = function () { var cur = selfQ.state.fq === undefined ? 0 : selfQ.state.fq; selfQ.setState({ fq: cur === i ? -1 : i }); };
@@ -101,6 +121,7 @@ class Component extends PageLogic {
     // Кросс-продажи: карточки проявляются по очереди
     var xp = this.state.xp || 0;
     for (var xi = 0; xi < 5; xi++) { var xe = ease(clamp(xp * 1.6 - xi * 0.14)); svv['xsC' + xi] = ['grid-column: 1 / span 7; grid-row: 1;', 'grid-column: 8 / span 5; grid-row: 1;', 'grid-column: 1 / span 4; grid-row: 2;', 'grid-column: 5 / span 4; grid-row: 2;', 'grid-column: 9 / span 4; grid-row: 2;'][xi] + ' opacity: ' + r(xe) + '; transform: translateY(' + r((1 - xe) * 36) + 'px);'; }
+    if (M) for (var xm = 0; xm < 5; xm++) svv['xsC' + xm] = svv['xsC' + xm].replace(/grid-column:[^;]*; grid-row:[^;]*;/, '');
     // «О предприятии» — сцена: фото на весь экран сжимается влево, справа выезжают карточки
     var asp = this.state.asp || 0, ae = ease(clamp(asp / 0.32));
     var akA = (this.state.asks || '').split(',').map(Number);
@@ -109,18 +130,26 @@ class Component extends PageLogic {
     svv.asH = 'margin: 0; font-size: ' + r(6.6 - 3.1 * ae) + 'vw; line-height: .96; font-weight: 500; letter-spacing: -.045em; max-width: ' + r(17 + 1 * ae) + 'ch;';
     svv.asLead = 'margin: 0; font-size: clamp(16px, 1.25vw, 20px); line-height: 1.5; color: rgba(244,243,239,.78); max-width: 44ch; opacity: ' + r(clamp((ae - 0.6) / 0.4)) + '; transform: translateY(' + r((1 - clamp((ae - 0.6) / 0.4)) * 16) + 'px);';
     for (var ak = 0; ak < 3; ak++) { var kq = ease(clamp((asp - 0.36 - ak * 0.16) / 0.16)); svv['asK' + ak] = 'opacity: ' + r(kq) + '; transform: translateY(' + r((1 - kq) * 40) + 'px);'; }
+    if (M) {
+      svv.asPanel = 'position: relative; height: 64svh; min-height: 420px; border-radius: 14px; overflow: hidden; background: #141415;';
+      svv.asPhoto = '';
+      svv.asH = 'margin: 0; font-size: 32px; line-height: 1; font-weight: 500; letter-spacing: -.04em;';
+      for (var am = 0; am < 3; am++) svv['asK' + am] = '';
+    }
     svv.abScene = (this.props.about || '') === 'Сцена: фото → карточки';
+    var xsv = this.props.xsell || 'Фото-карточки';
+    svv.xsBento = xsv === 'Бенто (цвет)'; svv.xsPhoto = xsv === 'Фото-карточки'; svv.xsList = xsv === 'Список с фото';
     // Импортозамещение: табло / таблица / карточки
     var imp = this.props.imp || 'Табло на скролле';
     svv.impA = imp === 'Табло на скролле'; svv.impB = imp === 'Таблица замен'; svv.impC = imp === 'Карточки «было → стало»';
-    var IN = 4, ipp = this.state.ipp || 0, iAct = Math.min(IN - 1, Math.floor(ipp * IN * 0.999));
+    var IN = 3, ipp = this.state.ipp || 0, iAct = Math.min(IN - 1, Math.floor(ipp * IN * 0.999));
     var iLoc = clamp(ipp * IN - iAct);
     svv.ipNum = '0' + (iAct + 1);
     svv.ipRL = 'height: 100%; transform: translateY(' + (-iAct * 100) + '%); transition: transform .7s cubic-bezier(.7,0,.2,1);';
     svv.ipRR = 'height: 100%; transform: translateY(' + (-iAct * 100) + '%); transition: transform .7s cubic-bezier(.7,0,.2,1) .18s;';
     svv.ipArr = 'color: #F19E65; display: flex; transform: translateX(' + r(ease(clamp(iLoc / 0.3)) * 10 - 5) + 'px);';
     svv.impD = imp === 'Табло-перевёртыш'; svv.impE = imp === 'Сканер замены';
-    var RP = [['ROSEMOUNT', '214C', 'ТСП/ТСМ', 'Термопреобразователь сопротивления'], ['WIKA', 'TC10-B', 'ТХА 1107', 'Термопара хромель-алюмель'], ['WIKA', 'TC83', 'ТПП 2101', 'Термопара платиновая'], ['JUMO', '902005/40', 'ТСП/ТСМ 0906', 'Термопреобразователь сопротивления']];
+    var RP = [['WIKA', 'TC84', 'ТПП 2101', 'Преобразователь термоэлектрический платинородий-платиновый'], ['JUMO', '901110/20-1046', 'ТПР 2.821.005', 'Преобразователь термоэлектрический'], ['JUMO', '902004/10', 'ТСП 9307', 'Термопреобразователь сопротивления платиновый']];
     var FCS = 'ABCDEFGHKMNPRSTVWXYZ0123456789АБВГДЖКЛМПРСТФХ/-';
     function flip(from, to, t, n) {
       var out = [], L = Math.max(from.length, to.length, n);
@@ -148,25 +177,25 @@ class Component extends PageLogic {
     // сканер: своя схема и характеристики для каждой замены
     var swI = clamp((iLoc - 0.15) / 0.55);
     var SPEC = [
-      [['Диапазон, °C', '−50…+400', '−50…+500', 1], ['Класс допуска', 'A', 'A', 0], ['НСХ', 'Pt100', 'Pt100', 0], ['Присоединение', 'M20×1,5', 'M20×1,5', 0], ['Срок поставки', '16 нед.', '4 нед.', 1]],
-      [['Диапазон, °C', '0…+1200', '−40…+1200', 1], ['Тип термопары', 'K', 'K', 0], ['Класс допуска', '1', '1', 0], ['Материал гильзы', 'AISI 316L', '12Х18Н10Т', 0], ['Срок поставки', '12 нед.', '3 нед.', 1]],
-      [['Диапазон, °C', '0…+1600', '0…+1600', 0], ['Тип термопары', 'S', 'S', 0], ['Защитный чехол', 'керамика', 'керамика', 0], ['Класс допуска', '2', '1', 1], ['Срок поставки', '14 нед.', '4 нед.', 1]],
-      [['Диапазон, °C', '−50…+200', '−50…+250', 1], ['Выходной сигнал', '4–20 мА', '4–20 мА', 0], ['НСХ', 'Pt100', 'Pt100', 0], ['Степень защиты', 'IP65', 'IP67', 1], ['Присоединение', 'G1/2', 'G1/2', 0]]
+      [['Диапазон, °C', '0…+1400', '0…+1450', 1], ['Защита от пыли и воды', 'IP66', 'IP66', 0], ['Взрывозащита', '1Ex e IIC T5 Gb X', '0Ex ia IIC T5 Ga X', 1]],
+      [['Диапазон, °C', '+600…+1600', '+600…+1600', 0], ['Термоэлектроды', 'Pt30Rh-Pt6Rh', 'ПР-30 / ПР-6, Ø 0,5', 0], ['Защитная арматура', 'керамика C 799 (KER 710)', 'газонепроницаемая высокоплотная керамика', 0]],
+      [['Диапазон, °C', '−50…+300', '−196…+500', 1], ['Класс допуска', 'B (A — опция)', 'A, B', 0], ['НСХ', 'Pt100', '100П', 0], ['Защитная арматура', 'сталь 1.4301', 'сталь 12Х18Н10Т', 0]]
     ];
     svv.scRows = SPEC[iAct].map(function (q, j) {
       var rv = clamp((swI - 0.1 - j * 0.16) / 0.14), better = q[3] === 1;
       return { p: q[0], a: q[1], b: q[2], badge: better ? '↑' : '', bs: 'font-weight: 500; color: ' + (better ? '#FFD190' : '#F4F3EF') + ';',
-        st: 'display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) minmax(0, 1fr) 20px; gap: 16px; align-items: center; padding: 1.6vh 0; border-top: 1px solid #2C2C2E; font-size: clamp(14px, 1.05vw, 17px); opacity: ' + r(0.25 + 0.75 * rv) + ';',
+        st: 'display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) minmax(0, 1fr) 20px; gap: 16px; align-items: center; padding: ' + (M ? '9px 0' : '1.6vh 0') + '; border-top: 1px solid #2C2C2E; font-size: ' + (M ? '13px' : 'clamp(14px, 1.05vw, 17px)') + '; opacity: ' + r(0.25 + 0.75 * rv) + ';',
         bst: 'font-size: 18px; font-weight: 500; color: #F19E65; justify-self: end; opacity: ' + r(rv) + '; transform: translateY(' + r((1 - rv) * 6) + 'px);' };
     });
-    for (var di = 0; di < 4; di++) svv['scD' + di] = di === iAct ? '' : 'display: none;';
-    svv.scBrand = rpI[0] === 'ROSEMOUNT' ? 'Rosemount' : (rpI[0] === 'WIKA' ? 'WIKA' : 'JUMO');
-    svv.scFrom = rpI[1]; svv.scTo = rpI[2]; svv.scType = 'НПП «Эталон» · ' + rpI[3];
+    for (var di = 0; di < 3; di++) svv['scD' + di] = di === iAct ? '' : 'display: none;';
+    svv.scBrand = rpI[0] === 'WIKA' ? 'WIKA · модель' : 'JUMO · модель';
+    svv.scFrom = rpI[1]; svv.scTo = rpI[2]; svv.scType = 'НПП «Эталон»'; svv.scDesc = rpI[3];
     svv.scWp = r(swI * 960);
     svv.scLine = 'transform: translateX(' + r(swI * 960) + 'px); opacity: ' + r(swI > 0.001 && swI < 0.999 ? 1 : 0) + ';';
     svv.scStrike = 'position: absolute; left: -2%; right: -2%; top: 54%; height: 3px; background: #F4F3EF; opacity: .7; transform-origin: left; transform: scaleX(' + r(clamp(swI / 0.5)) + ');';
     var twI = clamp((swI - 0.5) / 0.35);
-    svv.scToW = 'display: flex; flex-direction: column; gap: 6px; align-items: flex-end; text-align: right; opacity: ' + r(twI) + '; transform: translateY(' + r((1 - twI) * 16) + 'px);';
+    if (M) svv.scType = 'НПП «Эталон»';
+    svv.scToW = 'display: flex; flex-direction: column; gap: ' + (M ? '4px; align-items: flex-start; text-align: left;' : '6px; align-items: flex-end; text-align: right;') + ' opacity: ' + r(twI) + '; transform: translateY(' + r((1 - twI) * 16) + 'px);';
     var itA = (this.state.itrs || '').split(',').map(Number), icp = this.state.icp || 0;
     for (var ii = 0; ii < IN; ii++) {
       var strike = ii < iAct ? 1 : (ii === iAct ? ease(clamp((iLoc - 0.15) / 0.35)) : 0);
@@ -181,28 +210,28 @@ class Component extends PageLogic {
     }
     // Кейсы: переключение по ячейкам предприятий
     var CS = [
-      { name: 'Металлургический комбинат', ind: 'Металлургия · Урал', tag: 'Импортозамещение', title: 'Заменили импортные термопары в сталеплавильной печи',
-        task: 'Европейский поставщик прекратил отгрузки, запас термопар для дуговой печи заканчивался. Рабочая температура — до +1700 °C.',
-        sol: 'Подобрали отечественный аналог с совместимыми размерами и защитной арматурой — установили без переделки узлов.',
-        res: 'Печь работает без простоев, ресурс термопар не ниже импортных.',
-        m1: '6 недель', m1t: 'от заявки до поставки', m2: '+1700 °C', m2t: 'рабочая температура' },
-      { name: 'Производитель технических газов', ind: 'Химия и газы', tag: 'Индивидуальная разработка', title: 'Спроектировали датчик для жидкого азота',
-        task: 'Нужен контроль температуры в криогенной ёмкости при −196 °C. Серийные датчики давали погрешность на низких температурах.',
-        sol: 'КБ разработало датчик под криогенную среду, испытания прошли в собственной лаборатории.',
-        res: 'Стабильные показания во всём рабочем диапазоне, датчик перешёл в серийную поставку.',
-        m1: '±0,5 °C', m1t: 'погрешность при −196 °C', m2: '−196 °C', m2t: 'рабочая температура' },
-      { name: 'Машиностроительный завод', ind: 'Машиностроение', tag: 'Метрологическое оборудование', title: 'Перенесли поверку датчиков на площадку заказчика',
-        task: '800 датчиков в год приходилось возить на поверку в сторонний центр — линия простаивала.',
-        sol: 'Поставили комплект поверочного оборудования: калибратор, термостат, эталонный термометр. Обучили метрологов завода.',
-        res: 'Поверка проходит на месте, без вывоза датчиков и простоя линии.',
-        m1: '2 дня', m1t: 'вместо 3 недель на поверку', m2: '800', m2t: 'датчиков в год поверяют на месте' }
+      { name: 'Химическое предприятие', ind: 'Нефтехимия', tag: 'Импортозамещение', title: 'Заменили импортные датчики температуры в реакторе',
+        task: 'Разработать аналог преобразователя термоэлектрического для реактора, где метанол получают частичным окислением метана. Рабочая температура — до +1450 °C.',
+        sol: 'Спроектировали и разработали отечественный аналог со всеми необходимыми характеристиками. Изделие прошло все испытания, получены сертификаты на вид взрывозащиты, модель внесена в Госреестр средств измерений.',
+        res: 'Взрывозащищённый преобразователь ТПП 2101 запущен в производство и измеряет температуру в газовых реакторах в диапазоне 0…+1450 °C.',
+        m1: 'ТПП 2101', m1t: 'внесён в Госреестр СИ', m2: '+1450 °C', m2t: 'рабочая температура' },
+      { name: 'Судостроительный завод', ind: 'Судостроение', tag: 'Импортозамещение', title: 'Спроектировали линейку импортозамещающих датчиков для морских судов',
+        task: 'Спроектировать и изготовить «с нуля» прямые функциональные аналоги иностранной продукции, строго по индивидуальным параметрам заказчика.',
+        sol: 'Разработали аналоги с нужными диапазонами: датчики воды, воздуха и воздуха газотурбины — −50…+180 °C; смазочного масла на выходе из турбины — −60…+200 °C; выхлопных газов — −40…+800 °C.',
+        res: 'Стабильные показания во всём рабочем диапазоне, датчики перешли в серийную поставку.',
+        m1: '3 типа', m1t: 'датчиков в линейке', m2: '+800 °C', m2t: 'рабочая температура' },
+      { name: 'Хлебопекарное производство', ind: 'Пищевая отрасль', tag: 'Индивидуальная разработка', title: 'Разработали нестандартный датчик для пищевого производства',
+        task: 'Датчик по индивидуальному техническому решению клиента для месильной ёмкости лабораторной тестомесильной машины: контроль температуры теста в диапазоне +4…+90 °C.',
+        sol: 'КБ спроектировало датчик в форме скобы с чувствительным элементом строго по центру изделия. Испытания прошли в производственных условиях на территории заказчика.',
+        res: 'Датчик подтвердил заявленные характеристики и стабильность измерений во всём диапазоне, успешно интегрирован в процесс лабораторного тестозамеса.',
+        m1: 'с нуля', m1t: 'конструкция по ТЗ заказчика', m2: '+90 °C', m2t: 'рабочая температура' }
     ];
     var cs = this.state.cs || 0, selfK = this;
     CS.forEach(function (c, i) {
       var on = cs === i;
       svv['csName' + i] = c.name; svv['csInd' + i] = c.ind; svv['csSel' + i] = on ? 'true' : 'false';
       svv['csPick' + i] = function () { if ((selfK.state.cs || 0) !== i) selfK.setState({ cs: i }); };
-      svv['csC' + i] = 'position: relative; min-height: clamp(120px, 15vh, 170px); display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start; gap: 8px; padding: 22px 70px 22px 24px; border: 0; border-right: 1px solid #2C2C2E; border-bottom: 1px solid #2C2C2E; background: ' + (on ? 'rgba(244,243,239,.06)' : 'transparent') + '; color: #F4F3EF; font-family: inherit; cursor: pointer; opacity: ' + (on ? 1 : 0.6) + '; transition: background .3s, opacity .3s;';
+      svv['csC' + i] = 'position: relative; min-height: ' + (M ? '108px' : 'clamp(120px, 15vh, 170px)') + '; display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start; gap: 8px; padding: ' + (M ? '40px 10px 14px 12px' : '22px 70px 22px 24px') + '; border: 0; border-right: 1px solid #2C2C2E; border-bottom: 1px solid #2C2C2E; background: ' + (on ? 'rgba(244,243,239,.06)' : 'transparent') + '; color: #F4F3EF; font-family: inherit; cursor: pointer; opacity: ' + (on ? 1 : 0.6) + '; transition: background .3s, opacity .3s;';
       svv['csQ' + i] = 'position: absolute; right: 14px; top: 14px; width: 26px; height: 26px; border-radius: 3px; display: flex; align-items: center; justify-content: center; transition: background .3s, color .3s; ' + (on ? 'background: #F4F3EF; color: #0D0D0E;' : 'border: 1px solid rgba(244,243,239,.45); color: #F4F3EF;');
       svv['csL' + i] = 'position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: #F4F3EF; transform-origin: left; transform: scaleX(' + (on ? 1 : 0) + '); transition: transform .4s cubic-bezier(.2,.7,0,1);';
       svv['csI' + i] = 'opacity: ' + (on ? 1 : 0) + '; transform: scale(' + (on ? 1 : 1.04) + '); transition: opacity .6s ease, transform 1.2s cubic-bezier(.2,.7,0,1);';
@@ -262,9 +291,10 @@ class Component extends PageLogic {
     for (var ki = 1; ki < KP.length; ki++) { if (vt <= KP[ki][0]) { var k0 = KP[ki - 1], k1 = KP[ki], kf = (vt - k0[0]) / Math.max(0.001, k1[0] - k0[0]); T = k0[1] + (k1[1] - k0[1]) * ease(clamp(kf)); break; } T = KP[ki][1]; }
     T = Math.round(T);
     var tempTxt = (T > 0 ? '+' : (T < 0 ? '−' : '')) + Math.abs(T);
-    var ZN = ['Криогеника: ёмкости с жидким азотом', 'Северные газовые промыслы: задвижки на морозе', 'Тепловые пункты и теплосети', 'Паропроводы НПЗ и ТЭС', 'Металлургия: разливка стали', 'Поверка на излучателе АЧТ — до государственного эталона'];
+    var ZN = ['Криогеника: ёмкости с жидким азотом', 'Северные газовые промыслы, задвижки на морозе', 'Тепловые пункты и теплосети', 'НПЗ и ТЭС', 'Металлургия: разливка стали', 'Поверка на излучателе АЧТ'];
     var zi = vt < 2.7 ? 0 : vt < 5.1 ? 1 : vt < 7.5 ? 2 : vt < 9.9 ? 3 : vt < 12.3 ? 4 : 5;
     var zoneTxt = ZN[zi];
+    svv.rangeW = T >= 1700 ? 'до' : 'от';
     var acht = clamp((vt - 12.4) / 0.5);
     svv.achtOn = 'opacity: ' + r(acht) + ';';
     function X(t) { return t <= 0 ? 40 + (t + 200) / 200 * 0.22 * 920 : 40 + 0.22 * 920 + t / 2500 * 0.78 * 920; }
@@ -272,10 +302,12 @@ class Component extends PageLogic {
     var scMk = 'transform: translateX(' + r(X(T)) + 'px);';
     var vWrap = 'position: absolute; inset: 0;';
     var out = clamp(hp / 0.14);
-    var heroTxt = 'position: absolute; left: 4vw; top: 4vh; width: 46vw; display: flex; flex-direction: column; gap: 2.2vh; z-index: 2; opacity: ' + r(1 - out) + '; transform: translateY(' + r(-out * 50) + 'px); pointer-events: ' + (hp < 0.1 ? 'auto' : 'none') + ';';
+    var heroTxt = M ? 'position: absolute; left: 16px; right: 16px; bottom: 24px;' : 'position: absolute; left: 4vw; top: 4vh; width: 46vw;';
+    heroTxt += ' display: flex; flex-direction: column; gap: 2.2vh; z-index: 2; opacity: ' + r(1 - out) + '; transform: translateY(' + r(-out * 50) + 'px); pointer-events: ' + (hp < 0.1 ? 'auto' : 'none') + ';';
+    svv.mGrad = 'position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(180deg, rgba(0,0,0,.35) 0%, rgba(0,0,0,0) 26%, rgba(0,0,0,.25) 45%, rgba(0,0,0,.86) 78%, #000 100%); opacity: ' + r(1 - out) + ';';
     var show = clamp((hp - 0.14) / 0.08);
-    var rdStyle = 'position: absolute; left: 4vw; top: 4vh; display: flex; flex-direction: column; gap: 10px; z-index: 2; opacity: ' + r(show) + '; transform: translateY(' + r((1 - show) * 30) + 'px); pointer-events: none;';
-    var scStyle = 'position: absolute; left: 4vw; right: 4vw; bottom: 3vh; z-index: 2; opacity: ' + r(show) + ';';
+    var rdStyle = 'position: absolute; left: ' + (M ? '16px; top: 20px;' : '4vw; top: 4vh;') + ' display: flex; flex-direction: column; gap: 10px; z-index: 2; opacity: ' + r(show) + '; transform: translateY(' + r((1 - show) * 30) + 'px); pointer-events: none;';
+    var scStyle = 'position: absolute; left: ' + (M ? '16px; right: 16px; bottom: 22px;' : '4vw; right: 4vw; bottom: 3vh;') + ' z-index: 2; opacity: ' + r(show) + ';';
     // Форма заявки: валидация, экран «отправлено»
     var selfF = this, ferr = this.state.ferr;
     var submitForm = function (e) {

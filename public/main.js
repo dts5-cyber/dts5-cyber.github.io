@@ -33,7 +33,8 @@ class Component extends PageLogic {
       }
       var g = document.getElementById('geo'), cl = document.getElementById('clients');
       var gt = g ? g.getBoundingClientRect().top : 99999, ct = cl ? cl.getBoundingClientRect().top : 99999;
-      self.setState({ y: y, vh: h, vw: window.innerWidth || 1440, geoTop: gt, clTop: ct });
+      var vwN = window.innerWidth || 1440;
+      self.setState({ y: y, vh: h, vw: vwN, geoTop: gt, clTop: ct, menu: vwN < 768 ? self.state.menu : false });
       if (!self.state.geoSeen && gt < h * 0.55) { self.setState({ geoSeen: true }); self.runCount(); }
     });
   }
@@ -60,15 +61,21 @@ class Component extends PageLogic {
     function ease(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
     function r(n) { return Math.round(n * 1000) / 1000; }
     function lerp(a, b, t) { return a + (b - a) * t; }
+    // Телефон (< 768px): меньше шапка и логотип, отдельные отступы сцены, меню-бургер
+    var M = (this.state.vw || (typeof window !== 'undefined' ? window.innerWidth : 1440)) < 768, selfM = this;
+    var mOpen = M && !!this.state.menu;
+    var mv = { menuOpen: mOpen, menuExp: mOpen ? 'true' : 'false', burgPath: mOpen ? 'M5 5l10 10M15 5L5 15' : 'M3 7h14M3 13h14',
+      toggleMenu: function () { selfM.setState({ menu: !selfM.state.menu }); }, closeMenu: function () { selfM.setState({ menu: false }); } };
 
     // HERO: 0 → 1.3 экрана видео перематывается; затем кадр сжимается в карточку и схлопывается
-    var heroText = 'position: absolute; left: 4vw; bottom: 8vh; max-width: 44vw; z-index: 2; transform: translateY(' + r(-seg(0.6, 1.2) * 60) + 'px); opacity: ' + r(1 - seg(0.6, 1.15)) + ';';
+    var heroText = 'position: absolute; ' + (M ? 'left: 16px; right: 16px; bottom: 40px;' : 'left: 4vw; bottom: 8vh; max-width: 44vw;') + ' z-index: 2; transform: translateY(' + r(-seg(0.6, 1.2) * 60) + 'px); opacity: ' + r(1 - seg(0.6, 1.15)) + ';';
     // Переход: кадр распадается на 6 квадратов знака (как в логотипе: шаг = 1,25 стороны),
     // затем квадраты улетают в знак логотипа в шапке
     var W = this.state.vw || 1440, H = vh;
     var sq = Math.min(W, H) * 0.14, step = sq * 1.25, tot = sq + step * 2;
     var ox = W / 2 - tot / 2, oy = H / 2 - tot / 2;
-    var hsq = 40 * 54 / 200, hstep = 40 * 67.5 / 200, hx = W * 0.04, hy = 22;
+    var LH = M ? 32 : 40;
+    var hsq = LH * 54 / 200, hstep = LH * 67.5 / 200, hx = M ? 16 : W * 0.04, hy = M ? 16 : 22;
     var cells = [[0, 0], [1, 0], [2, 0], [1, 1], [2, 1], [2, 2]];
     var d = [], fLast = ease(seg(2.3 + 5 * 0.045, 2.8 + 5 * 0.045));
     cells.forEach(function (c, i) {
@@ -85,7 +92,7 @@ class Component extends PageLogic {
     var gradStyle = 'position: absolute; inset: 0; background: linear-gradient(60deg, rgba(8,8,9,.85) 0%, rgba(8,8,9,.4) 35%, rgba(8,8,9,0) 60%); opacity: ' + r(1 - k) + ';';
     // Шапка собирается из прилетевших квадратов: знак → надпись → пункты меню
     var markIn = seg(2.86, 3.02), wordIn = ease(seg(2.98, 3.4));
-    var hBase = 'position: absolute; left: 0; top: 0; height: 40px; width: auto; display: block; ';
+    var hBase = 'position: absolute; left: 0; top: 0; height: ' + LH + 'px; width: auto; display: block; ';
     var hMark = hBase + 'clip-path: inset(0 79% 0 0); opacity: ' + r(markIn) + ';';
     var hWord = hBase + 'clip-path: inset(0 ' + r((1 - wordIn) * 73) + '% 0 27%); opacity: ' + r(wordIn > 0 ? 1 : 0) + '; transform: translateX(' + r((1 - wordIn) * -14) + 'px);';
     var hNav = [0, 1, 2, 3, 4].map(function (i) {
@@ -113,7 +120,7 @@ class Component extends PageLogic {
       if (key && grad) ks += ' background: linear-gradient(100deg, ' + GR[grad] + '); background-size: 200% 100%; background-position: ' + r((1 - u) * 100) + '% 0; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;';
       return { text: w, ks: ks, style: 'opacity: ' + r(0.16 + (key ? 0.84 : 0.34) * t) + ';' + (key ? ' white-space: nowrap;' : '') };
     });
-    var introStyle = 'position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 36px; padding: 0 8vw; opacity: ' + r(seg(2.95, 3.2) * (1 - out)) + '; transform: translateY(' + r(-out * 80) + 'px); pointer-events: none;';
+    var introStyle = 'position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: ' + (M ? '24px; padding: 0 20px;' : '36px; padding: 0 8vw;') + ' opacity: ' + r(seg(2.95, 3.2) * (1 - out)) + '; transform: translateY(' + r(-out * 80) + 'px); pointer-events: none;';
 
     // КАРТОЧКИ
     var variant = this.props.cards || 'C — фото на всю карточку';
@@ -142,10 +149,10 @@ class Component extends PageLogic {
       return {
         img: 'img' + (i + 1), e: e, idx: '0' + (i + 1), title: d.title, label: d.label, text: d.text, caption: '', links: links,
         // C — фото на всю карточку
-        cWrap: 'position: absolute; left: 4vw; right: 4vw; top: calc(84px + 2vh); bottom: 3vh; border-radius: 16px; overflow: hidden; background: #141415; z-index: ' + (i + 3) + '; clip-path: inset(' + r((1 - e) * 100) + '% 0 0 0 round 16px); filter: brightness(' + r(1 - p * 0.55) + ');',
+        cWrap: 'position: absolute; ' + (M ? 'left: 12px; right: 12px; top: 74px; bottom: 14px;' : 'left: 4vw; right: 4vw; top: calc(84px + 2vh); bottom: 3vh;') + ' border-radius: 16px; overflow: hidden; background: #141415; z-index: ' + (i + 3) + '; clip-path: inset(' + r((1 - e) * 100) + '% 0 0 0 round 16px); filter: brightness(' + r(1 - p * 0.55) + ');',
         cMedia: media + ' transform: scale(' + r(1.14 - 0.14 * e) + ');',
-        cTitle: 'margin: 0; font-size: clamp(52px, 6.4vw, 124px); line-height: .92; font-weight: 500; letter-spacing: -.05em; white-space: nowrap; transform: translateY(' + r((1 - late) * 40) + 'px); opacity: ' + r(late) + ';',
-        cText: 'margin: 0; font-size: clamp(17px, 1.4vw, 22px); line-height: 1.4; max-width: 36ch; opacity: ' + r(late) + ';',
+        cTitle: 'margin: 0; font-size: ' + (M ? '34px' : 'clamp(52px, 6.4vw, 124px)') + '; line-height: .92; font-weight: 500; letter-spacing: -.05em; white-space: nowrap; transform: translateY(' + r((1 - late) * 40) + 'px); opacity: ' + r(late) + ';',
+        cText: 'margin: 0; font-size: ' + (M ? '15px' : 'clamp(17px, 1.4vw, 22px)') + '; line-height: 1.4; max-width: 36ch; opacity: ' + r(late) + ';',
         // A
         aWrap: 'position: absolute; left: 5vw; right: 5vw; top: calc(84px + 3vh); bottom: 4vh; z-index: ' + (i + 3) + '; clip-path: inset(' + r((1 - e) * 100) + '% 0 0 0 round 14px);',
         aPanel: 'position: absolute; inset: 0; box-sizing: border-box; padding: 3vh 3vw 3.5vh; background: #141415; border: 1px solid #2C2C2E; border-radius: 14px; display: grid; grid-template-rows: auto auto minmax(0, 1fr); row-gap: 2.4vh; filter: brightness(' + r(1 - p * 0.55) + ');',
@@ -267,7 +274,7 @@ class Component extends PageLogic {
         style: 'width: 10px; height: 10px; padding: 0; border-radius: 50%; cursor: pointer; border: 1.5px solid ' + (on ? accent : 'rgba(244,243,239,.75)') + '; background: ' + (on ? accent : 'transparent') + ';'
       };
     });
-    var dotsStyle = 'position: absolute; right: 2vw; top: 50%; transform: translateY(-50%); z-index: 10; display: flex; flex-direction: column; gap: 22px; opacity: ' + r(seg(4.5, 4.9)) + ';';
+    var dotsStyle = 'position: absolute; right: ' + (M ? '20px' : '2vw') + '; top: 50%; transform: translateY(-50%); z-index: 10; display: flex; flex-direction: column; gap: 22px; opacity: ' + r(seg(4.5, 4.9)) + ';';
 
     var cta = this.props.cta || 'Контур';
     // Форма заявки: валидация, экран «отправлено»
@@ -289,7 +296,7 @@ class Component extends PageLogic {
       toggleAgree: function () { selfF.setState({ agree: !selfF.state.agree }); },
       resetForm: function () { selfF.setState({ sent: false, agree: false, ferr: {} }); }
     };
-    return Object.assign(formVals, { hMark: hMark, hWord: hWord, hNav0: hNav[0], hNav1: hNav[1], hNav2: hNav[2], hNav3: hNav[3], hNav4: hNav[4], hcText: this.props.headerCta === 'Текст', hcIcon: (this.props.headerCta || 'Квадрат') === 'Квадрат', hcExp: this.props.headerCta === 'Квадрат с раскрытием', rows: rows, closeCase: closeCase, ctaA: cta === 'Контур', ctaB: cta === 'Контур + квадрат', ctaC: cta === 'Ссылка + квадрат', geo: geo, gradStyle: gradStyle, accent: accent, isA: isA, isB: isB, isC: isC, isR: isR, cards: cards, headerBg: headerBg, heroText: heroText, frameStyle: frameStyle, words: words, introStyle: introStyle, dots: dots, dotsStyle: dotsStyle });
+    return Object.assign(formVals, mv, { hMark: hMark, hWord: hWord, hNav0: hNav[0], hNav1: hNav[1], hNav2: hNav[2], hNav3: hNav[3], hNav4: hNav[4], hcText: this.props.headerCta === 'Текст', hcIcon: (this.props.headerCta || 'Квадрат') === 'Квадрат', hcExp: this.props.headerCta === 'Квадрат с раскрытием', rows: rows, closeCase: closeCase, ctaA: cta === 'Контур', ctaB: cta === 'Контур + квадрат', ctaC: cta === 'Ссылка + квадрат', geo: geo, gradStyle: gradStyle, accent: accent, isA: isA, isB: isB, isC: isC, isR: isR, cards: cards, headerBg: headerBg, heroText: heroText, frameStyle: frameStyle, words: words, introStyle: introStyle, dots: dots, dotsStyle: dotsStyle });
   }
 }
 
