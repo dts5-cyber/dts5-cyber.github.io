@@ -8,6 +8,8 @@ class Component extends PageLogic {
   componentDidMount() {
     window.addEventListener('scroll', this.onScroll, { passive: true });
     window.addEventListener('resize', this.onScroll);
+    this.svInit();
+    this.rmInit();
     this.onScroll();
   }
   componentWillUnmount() {
@@ -23,7 +25,11 @@ class Component extends PageLogic {
       var el = document.getElementById('hero'), h = window.innerHeight || 900;
       if (!el) return;
       var rc = el.getBoundingClientRect();
-      var hp = Math.max(0, Math.min(1, (84 - rc.top) / Math.max(1, rc.height - h + 84)));
+      var hp = Math.max(0, Math.min(1, -rc.top / Math.max(1, rc.height - h)));
+      self.svDraw(hp);
+      var coE = document.getElementById('company'); if (coE && !self.coStart && coE.getBoundingClientRect().top < h * 0.7) { self.coStart = 1; var t0 = performance.now(); (function tick(t) { var k = Math.min(1, (t - t0) / 1600); self.setState({ coK: 1 - Math.pow(1 - k, 3) }); if (k < 1) requestAnimationFrame(tick); })(t0); }
+      if (!self.state.rtOn) { var ie = document.getElementById('imp'); if (ie && ie.getBoundingClientRect().top < h * 0.55) self.setState({ rtOn: true }); }
+      var rw = document.getElementById('rmWrap'); if (rw) { var qr = rw.getBoundingClientRect(); var rm = Math.max(0, Math.min(1, (h * 0.6 - qr.top) / Math.max(1, qr.height * 0.8))); rm = Math.round(rm * 400) / 400; if (rm !== self.state.rm) self.setState({ rm: rm }); }
       var v = document.getElementById('etVideo');
       if (v && v.duration && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         var t = Math.max(0, Math.min(1, (hp - 0.16) / 0.66)) * Math.min(3.7, v.duration - 0.05);
@@ -43,7 +49,7 @@ class Component extends PageLogic {
       var xg = document.getElementById('xsGrid'), xp = 0; if (xg) { var qx = xg.getBoundingClientRect(); xp = Math.max(0, Math.min(1, (h * 0.95 - qx.top) / (h * 0.5))); }
       if (Math.abs(xp - (self.state.xp || 0)) > 0.002) self.setState({ xp: xp });
       var asS = document.getElementById('abSceneSec'), asp = 0;
-      if (asS) { var qa = asS.getBoundingClientRect(); asp = Math.max(0, Math.min(1, (84 - qa.top) / Math.max(1, qa.height - h + 84))); }
+      if (asS) { var qa = asS.getBoundingClientRect(); asp = Math.max(0, Math.min(1, -qa.top / Math.max(1, qa.height - h))); var aon = qa.top <= 0.5; if (aon !== !!self.state.asOn) self.setState({ asOn: aon }); }
       if (Math.abs(asp - (self.state.asp || 0)) > 0.001) self.setState({ asp: asp });
       var ipp = 0, ipE = document.getElementById('impPin'); if (ipE) { var qi = ipE.getBoundingClientRect(); ipp = Math.max(0, Math.min(1, (84 - qi.top) / Math.max(1, qi.height - h + 84))); }
       var itr = []; document.querySelectorAll('.impRow').forEach(function (e) { var q = e.getBoundingClientRect(); itr.push(Math.round(Math.max(0, Math.min(1, (h * 0.92 - q.top) / (h * 0.3))) * 1000) / 1000); });
@@ -54,6 +60,59 @@ class Component extends PageLogic {
       if (mi) { var rm = mi.getBoundingClientRect(); mp = Math.max(0, Math.min(1, (h * 0.92 - rm.top) / (h * 0.62))); }
       if (Math.abs(hp - self.state.hp) > 0.0005 || Math.abs(sp - (self.state.sp || 0)) > 0.0005 || Math.abs(mp - (self.state.mp || 0)) > 0.002) self.setState({ hp: hp, sp: sp, mp: mp });
     });
+  }
+  svVals() {
+    var hp = this.state.hp || 0;
+    function cl(x) { return Math.max(0, Math.min(1, x)); }
+    function r(n) { return Math.round(n * 1000) / 1000; }
+    function op(a, b, c, d) { return cl((hp - a) / (b - a)) * (1 - cl((hp - c) / (d - c))); }
+    function st(o, dir) { return 'opacity: ' + r(o) + '; transform: translateY(' + r((1 - o) * 26 * dir) + 'px); pointer-events: ' + (o > 0.5 ? 'auto' : 'none') + ';'; }
+    var o1 = 1 - cl((hp - 0.8) / 0.12), o2 = op(0.3, 0.38, 0.58, 0.65), o3 = op(0.7, 0.78, 2, 3);
+    var act = hp < 0.27 ? 0 : (hp < 0.66 ? 1 : 2);
+    var fr = Math.round(cl(hp / 0.9) * 80) + 1;
+    var selfV = this; requestAnimationFrame(function () { selfV.svDraw(selfV.state.hp || 0); });
+    var rmv = {}, rmp = this.state.rm || 0, pts = this.rmPts, rfr = this.rmFr || [0.02, 0.22, 0.42, 0.62, 0.82];
+    rmv.rmProg = 'stroke-dashoffset: ' + r(1000 - rmp * 1000) + ';';
+    rmv.rmFill = 'height: ' + r(rmp * 100) + '%;';
+    if (pts) { var pi = Math.round(rmp * 200), pt = pts[Math.max(0, Math.min(200, pi))]; rmv.rmCar = 'transform: translate(' + r(pt[0]) + 'px, ' + r(pt[1]) + 'px); opacity: ' + (rmp > 0.005 && rmp < 0.995 ? 1 : 0) + '; transition: opacity .3s;'; } else rmv.rmCar = 'opacity: 0;';
+    var rcur = -1; for (var ri = 0; ri < 5; ri++) { var on = rmp >= rfr[ri] - 0.01; if (on) rcur = ri; rmv['rmN' + ri] = on ? 'rmOn' : ''; rmv['rmL' + ri] = on ? 'rmOnL' : ''; }
+    if (rcur >= 0) rmv['rmL' + rcur] += ' vCur';
+    var coK = this.state.coK || 0;
+    rmv.coN0 = String(Math.round(10 * coK)); rmv.coN1 = String(Math.round(3300 * coK / 10) * 10); rmv.coN2 = String(Math.round(50 * coK));
+    return Object.assign(rmv, { rtCls: this.state.rtOn ? 'imp-on' : '', svC1: st(o1, -1), svC2: st(o2, 1), svC3: st(o3, 1), svR0: act === 0 ? 'on' : '', svR1: act === 1 ? 'on' : '', svR2: act === 2 ? 'on' : '',
+      svBar: 'width: ' + r(cl(hp) * 100) + '%;', svHint: 'opacity: ' + r(1 - cl(hp / 0.06)) + ';', svMetaS: 'opacity: ' + r(1 - cl((hp - 0.8) / 0.12)) + ';', svFr: String(fr).padStart(3, '0') });
+  }
+  rmInit() {
+    var pth = document.getElementById('rmPath'); if (!pth || !pth.getTotalLength) return;
+    var L = pth.getTotalLength(), pts = [];
+    for (var i = 0; i <= 200; i++) { var q = pth.getPointAtLength(L * i / 200); pts.push([q.x, q.y]); }
+    var NX = [80, 340, 600, 860, 1120], fr = NX.map(function (x) { var best = 0, bd = 1e9; pts.forEach(function (p, i) { var dd = Math.abs(p[0] - x); if (dd < bd) { bd = dd; best = i; } }); return best / 200; });
+    this.rmPts = pts; this.rmFr = fr; this.setState({ rmReady: true });
+  }
+  svInit() {
+    var ids = 'f00 f01 f02 f03 f04 f05 f06 f07 f08 f09 f10 f11 f12 f13 f14 f15 f16 f17 f18 f19 f20 f21 f22 f23 f24 f25 f26 f27 f28 f29 f30 f31 f32 f33 f34 f35 f36 f37 f38 f39 f40 f41 f42 f43 f44 f45 f46 f47 f48 f49 f50 f51 f52 f53 f54 f55 f56 f57 f58 f59 f60 f61 f62 f63 f64 f65 f66 f67 f68 f69 f70 f71 f72 f73 f74 f75 f76 f77 f78 f79 f80'.split(' '), self = this;
+    this.svImgs = ids.map(function (id, i) {
+      var im = new Image(); im.decoding = 'async';
+      im.onload = function () { im.ok = true; if (i === self.svLast) self.svDraw(self.state.hp || 0, true); };
+      im.src = '/assets/supply_hero/' + id + '.webp'; return im;
+    });
+  }
+  svDraw(hp, force) {
+    var cv = document.getElementById('svCv'); if (!cv || !this.svImgs) return;
+    var w = cv.clientWidth, h = cv.clientHeight, dpr = Math.min(window.devicePixelRatio || 1, 2);
+    if (!w || !h) return;
+    if (cv.width !== Math.round(w * dpr) || cv.height !== Math.round(h * dpr)) { cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); force = true; }
+    var n = this.svImgs.length, x = Math.max(0, Math.min(1, hp / 0.9)) * (n - 1), i0 = Math.floor(x), t = x - i0;
+    var key = Math.round(x * 20);
+    if (!force && key === this.svKey) return;
+    this.svKey = key; this.svLast = i0;
+    var A = this.svImgs[i0], B = this.svImgs[Math.min(n - 1, i0 + 1)];
+    if (!A.ok) { for (var k = i0; k >= 0; k--) { if (this.svImgs[k].ok) { A = this.svImgs[k]; break; } } if (!A.ok) return; t = 0; }
+    var ctx = cv.getContext('2d'), iw = 1600, ih = 900, cw = cv.width, ch = cv.height;
+    var s = Math.max(cw / iw, ch / ih), dw = iw * s, dh = ih * s, fx = 0.5;
+    var dx = (cw - dw) * fx, dy = (ch - dh) / 2;
+    ctx.globalAlpha = 1; ctx.drawImage(A, dx, dy, dw, dh);
+    if (t > 0.04 && B.ok && B !== A) { ctx.globalAlpha = t; ctx.drawImage(B, dx, dy, dw, dh); ctx.globalAlpha = 1; }
   }
   renderVals() {
     // Сцена первого экрана: hp — прогресс закреплённой секции (0…1)
@@ -109,9 +168,11 @@ class Component extends PageLogic {
     // «О предприятии» — сцена: фото на весь экран сжимается влево, справа выезжают карточки
     var asp = this.state.asp || 0, ae = ease(clamp(asp / 0.32));
     var akA = (this.state.asks || '').split(',').map(Number);
-    svv.asPanel = 'position: absolute; left: 0; top: 2.4vh; bottom: 3vh; width: calc(' + r(50 + 50 * (1 - ae)) + '% - ' + r(8 * ae) + 'px); border-radius: ' + r(6 + 10 * ae) + 'px; overflow: hidden; background: #141415; pointer-events: auto;';
-    svv.asPhoto = 'transform: scale(' + r(1.08 - 0.08 * ae) + '); transform-origin: 50% 50%;';
-    svv.asH = 'margin: 0; font-size: ' + r(6.6 - 3.1 * ae) + 'vw; line-height: .96; font-weight: 500; letter-spacing: -.045em; max-width: ' + r(17 + 1 * ae) + 'ch;';
+    var ib = 1 - ae; svv.asPanel = 'position: absolute; left: ' + r(4 * ae) + 'vw; top: calc(' + r(84 * ae) + 'px + ' + r(2.4 * ae) + 'vh); bottom: ' + r(3 * ae) + 'vh; width: calc((100% - ' + r(8 * ae) + 'vw) * ' + r(0.5 + 0.5 * ib) + ' - ' + r(8 * ae) + 'px); border-radius: ' + r(16 * ae) + 'px; overflow: hidden; background: #08080A; pointer-events: auto;';
+    svv.asFade = 'opacity: ' + r(clamp((ae - 0.25) / 0.6)) + ';';
+    var aOn = !!this.state.asOn; svv.asPanel += ' visibility: ' + (aOn ? 'visible' : 'hidden') + ';'; svv.asBg = aOn ? 'background: #0D0D0E;' : '';
+    svv.asPhoto = 'background: #08080A url(/assets/supply_6ac8288b.webp) 50% 50% / cover no-repeat;';
+    svv.asH = 'margin: 0; font-size: ' + r(6.6 - 3.1 * ae) + 'vw; line-height: .96; font-weight: 500; letter-spacing: -.045em; max-width: ' + r(17 + 1 * ae) + 'ch; opacity: ' + r(clamp((ae - 0.35) / 0.55)) + '; transform: translateY(' + r((1 - clamp((ae - 0.35) / 0.55)) * 24) + 'px);';
     svv.asLead = 'margin: 0; font-size: clamp(16px, 1.25vw, 20px); line-height: 1.5; color: rgba(244,243,239,.78); max-width: 44ch; opacity: ' + r(clamp((ae - 0.6) / 0.4)) + '; transform: translateY(' + r((1 - clamp((ae - 0.6) / 0.4)) * 16) + 'px);';
     for (var ak = 0; ak < 3; ak++) { var kq = ease(clamp((asp - 0.36 - ak * 0.16) / 0.16)); svv['asK' + ak] = 'opacity: ' + r(kq) + '; transform: translateY(' + r((1 - kq) * 40) + 'px);'; }
     svv.abScene = true;
@@ -254,7 +315,70 @@ class Component extends PageLogic {
       toggleAgree: function () { selfF.setState({ agree: !selfF.state.agree }); },
       resetForm: function () { selfF.setState({ sent: false, agree: false, ferr: {} }); }
     };
-    return Object.assign(formVals, svv, { ctaA: true, ctaB: false, ctaC: false, abSplit: ab === 'Фото + список', abReel: ab === 'Лента', abBento: ab === 'Мозаика', abChain: ab === 'Цепочка производства', abPhoto: ab === 'Фото-плитки', abList: ab === 'Крупный список', abTiles: ab === 'Плитки (исходный)', vWrap: vWrap, heroTxt: heroTxt, rdStyle: rdStyle, scStyle: scStyle, tempTxt: tempTxt, zoneTxt: zoneTxt, scW: scW, scMk: scMk });
+
+    // Кейсы РТ-Техпоставки (демо)
+    var MK = typeof window !== 'undefined' && window.innerWidth < 768;
+    var CS = [
+      { name: 'Машиностроительный завод', ind: 'Машиностроение', tag: 'Металлопрокат', title: 'Закрыли дефицит нержавеющего проката под серийный заказ',
+        task: 'Для запуска серии нужен нержавеющий прокат редкого сортамента по ГОСТ — у привычных поставщиков позиции нет в наличии.',
+        sol: 'Нашли производителя с нужным сортаментом, проверили сертификаты и соответствие ГОСТ, согласовали поэтапную отгрузку.',
+        res: 'Металл поступил на площадку до старта серии, производство запустили по графику.',
+        m1: 'ГОСТ', m1t: 'соответствие подтверждено', m2: 'в срок', m2t: 'старт серии без сдвига' },
+      { name: 'Приборостроительное предприятие', ind: 'Электроника', tag: 'ЭКБ', title: 'Подобрали замену снятым с производства микросхемам',
+        task: 'Часть электронной компонентной базы для изделия сняли с производства, а запасов хватало на несколько месяцев.',
+        sol: 'Подобрали функциональные аналоги, согласовали их с КБ заказчика и организовали поставку, в том числе через параллельный импорт.',
+        res: 'Выпуск изделия продолжился без остановки, номенклатура закрыта на весь год вперёд.',
+        m1: 'аналоги', m1t: 'согласованы с КБ заказчика', m2: 'без простоя', m2t: 'выпуск продолжился' },
+      { name: 'Металлургический комбинат', ind: 'Металлургия', tag: 'Ферросплавы', title: 'Наладили регулярные поставки ферросплавов',
+        task: 'Комбинату нужны стабильные поставки ферросилиция и ферромарганца с подтверждённым химическим составом.',
+        sol: 'Сформировали график отгрузок, организовали входной контроль каждой партии и сопровождение документов.',
+        res: 'Сырьё поступает по графику, каждая партия сопровождается полным пакетом документов.',
+        m1: 'по графику', m1t: 'регулярные отгрузки', m2: '100%', m2t: 'партий с документами' }
+    ];
+    var cs = this.state.cs || 0, selfK = this;
+    CS.forEach(function (c, i) {
+      var on = cs === i;
+      svv['csName' + i] = c.name; svv['csInd' + i] = c.ind; svv['csSel' + i] = on ? 'true' : 'false';
+      svv['csPick' + i] = function () { if ((selfK.state.cs || 0) !== i) selfK.setState({ cs: i }); };
+      svv['csC' + i] = 'position: relative; min-height: ' + (MK ? '108px' : 'clamp(120px, 15vh, 170px)') + '; display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start; gap: 8px; padding: ' + (MK ? '40px 10px 14px 12px' : '22px 70px 22px 24px') + '; border: 0; border-right: 1px solid #2C2C2E; border-bottom: 1px solid #2C2C2E; background: ' + (on ? 'rgba(244,243,239,.06)' : 'transparent') + '; color: #F4F3EF; font-family: inherit; cursor: pointer; opacity: ' + (on ? 1 : .6) + '; transition: background .3s, opacity .3s;';
+      svv['csQ' + i] = 'position: absolute; right: 14px; top: 14px; width: 26px; height: 26px; border-radius: 3px; display: flex; align-items: center; justify-content: center; transition: background .3s, color .3s; ' + (on ? 'background: #F4F3EF; color: #0D0D0E;' : 'border: 1px solid rgba(244,243,239,.45); color: #F4F3EF;');
+      svv['csL' + i] = 'position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: #F4F3EF; transform-origin: left; transform: scaleX(' + (on ? 1 : 0) + '); transition: transform .4s cubic-bezier(.2,.7,0,1);';
+      svv['csI' + i] = 'opacity: ' + (on ? 1 : 0) + '; transform: scale(' + (on ? 1 : 1.04) + '); transition: opacity .6s ease, transform 1.2s cubic-bezier(.2,.7,0,1);';
+    });
+    var cc = CS[cs];
+    svv.csTag = cc.tag; svv.csIndT = cc.ind; svv.csTitle = cc.title; svv.csTask = cc.task; svv.csSol = cc.sol; svv.csRes = cc.res;
+    svv.csM1 = cc.m1; svv.csM1t = cc.m1t; svv.csM2 = cc.m2; svv.csM2t = cc.m2t;
+    svv.csBody = 'display: flex; flex-direction: column; gap: 2.6vh;';
+    svv.xsBento = false; svv.xsPhoto = true; svv.xsList = false;
+    if (MK) for (var xm2 = 0; xm2 < 5; xm2++) if (svv['xsC' + xm2]) svv['xsC' + xm2] = svv['xsC' + xm2].replace(/grid-column:[^;]*; grid-row:[^;]*;/, '');
+
+    // Модальная форма по клику на карточки направлений
+    var MDN = ['Оборудование и комплектующие', 'Электронная компонентная база', 'Металлопрокат', 'Ферросплавы', 'Системы хранения', 'Освоение продукции под задачу заказчика'];
+    var selfM = this, md = this.state.md, mdErr = this.state.mdErr || {};
+    MDN.forEach(function (n, i) {
+      svv['mdOpen' + i] = function () { selfM.setState({ md: i, mdSent: false, mdErr: {} }); };
+      svv['mdKey' + i] = function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selfM.setState({ md: i, mdSent: false, mdErr: {} }); } };
+    });
+    if (!this.mdEsc && typeof window !== 'undefined') { this.mdEsc = function (e) { if (e.key === 'Escape' && selfM.state.md != null) selfM.setState({ md: null }); }; window.addEventListener('keydown', this.mdEsc); }
+    svv.mdShow = md != null; svv.mdDir = md != null ? MDN[md] : '';
+    svv.mdForm = md != null && !this.state.mdSent; svv.mdDone = md != null && !!this.state.mdSent;
+    svv.mdClose = function () { selfM.setState({ md: null }); };
+    svv.mdErrN = mdErr.n || ''; svv.mdErrC = mdErr.c || '';
+    svv.mdInpN = 'inp' + (mdErr.n ? ' bad' : ''); svv.mdInpC = 'inp' + (mdErr.c ? ' bad' : '');
+    svv.mdSubmit = function (e) {
+      e.preventDefault(); var f = e.target, er = {};
+      if (!(f.mdname.value || '').trim()) er.n = 'Укажите имя';
+      var c = (f.mdcontact.value || '').trim();
+      if (!c) er.c = 'Укажите телефон или почту'; else if (!/@/.test(c) && c.replace(/\D/g, '').length < 10) er.c = 'Проверьте телефон или почту';
+      if (er.n || er.c) selfM.setState({ mdErr: er }); else selfM.setState({ mdErr: {}, mdSent: true });
+    };
+
+    var exA = this.state.ex || 0, selfE = this;
+    for (var ek = 0; ek < 6; ek++) (function (k) {
+      svv['exC' + k] = 'exC' + (exA === k ? ' on' : '');
+      svv['exHov' + k] = function () { if ((selfE.state.ex || 0) !== k) selfE.setState({ ex: k }); };
+    })(ek);
+    return Object.assign(formVals, svv, this.svVals(), { ctaA: true, ctaB: false, ctaC: false, abSplit: ab === 'Фото + список', abReel: ab === 'Лента', abBento: ab === 'Мозаика', abChain: ab === 'Цепочка производства', abPhoto: ab === 'Фото-плитки', abList: ab === 'Крупный список', abTiles: ab === 'Плитки (исходный)', vWrap: vWrap, heroTxt: heroTxt, rdStyle: rdStyle, scStyle: scStyle, tempTxt: tempTxt, zoneTxt: zoneTxt, scW: scW, scMk: scMk });
   }
 }
 

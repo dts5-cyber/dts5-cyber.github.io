@@ -154,5 +154,61 @@
   "967eea45a7a8cf94c9146f4129ef61b7": {
     "file": "assets/etalon_case_bakery.webp",
     "role": "Эталон: кейс — пищевая отрасль"
+  },
+  "0aa207034af5bc56d32d0fb7659e1308": {
+    "file": "assets/supply_0aa20703.webp",
+    "role": "Страница «Снабжение» (РТ-Техпоставка)"
+  },
+  "1425dbbc2812ab5d3341d7d395a289fb": {
+    "file": "assets/supply_1425dbbc.webp",
+    "role": "Страница «Снабжение» (РТ-Техпоставка)"
+  },
+  "2be231b504ec6816c9ac58fe1c393a1e": {
+    "file": "assets/supply_2be231b5.webp",
+    "role": "Страница «Снабжение» (РТ-Техпоставка)"
+  },
+  "4129535350ffff84b08b4f75066c41c8": {
+    "file": "assets/supply_41295353.webp",
+    "role": "Страница «Снабжение» (РТ-Техпоставка)"
+  },
+  "50e661664444949ff231e11cece518f4": {
+    "file": "assets/supply_50e66166.webp",
+    "role": "Страница «Снабжение» (РТ-Техпоставка)"
+  },
+  "6ac8288b3afeb00e8a0be3381767ad48": {
+    "file": "assets/supply_6ac8288b.webp",
+    "role": "Страница «Снабжение» (РТ-Техпоставка)"
+  },
+  "8315e2f0362bda8029172fb41c216f55": {
+    "file": "assets/supply_8315e2f0.webp",
+    "role": "Страница «Снабжение» (РТ-Техпоставка)"
+  },
+  "98a887c19dde4f2d384971418fb89429": {
+    "file": "assets/supply_98a887c1.webp",
+    "role": "Страница «Снабжение» (РТ-Техпоставка)"
+  },
+  "b5b6ad2ebd47dd28ed976e41da55dfaf": {
+    "file": "assets/supply_b5b6ad2e.webp",
+    "role": "Страница «Снабжение» (РТ-Техпоставка)"
+  },
+  "be458512615176ef5bdb17bf27cb53d7": {
+    "file": "assets/supply_be458512.webp",
+    "role": "Страница «Снабжение» (РТ-Техпоставка)"
+  },
+  "d44443b69ff8afa7500ea7d8762eb388": {
+    "file": "assets/supply_d44443b6.webp",
+    "role": "Страница «Снабжение» (РТ-Техпоставка)"
+  },
+  "da802266170230ed043d31c874134f8a": {
+    "file": "assets/supply_da802266.webp",
+    "role": "Страница «Снабжение» (РТ-Техпоставка)"
+  },
+  "e8778ed33d2f3a3fda38df41f9afbded": {
+    "file": "assets/supply_e8778ed3.webp",
+    "role": "Страница «Снабжение» (РТ-Техпоставка)"
+  },
+  "supply_hero/*": {
+    "file": "assets/supply_hero/f00–f80.webp",
+    "role": "Снабжение: кадры scroll-пролёта по складу (hero), 81 шт."
   }
 }
