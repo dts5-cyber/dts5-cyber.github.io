@@ -193,15 +193,18 @@ header nav{gap:10px!important}
 .mHide{display:none!important}
 .mCol{flex-direction:column!important;align-items:flex-start!important}
 [style*="position: sticky; top: 84px"]{top:64px!important}
-[style*="position: sticky"][style*="height: calc(100vh - 84px)"]{height:calc(100svh - 64px)!important}
+[style*="position: sticky"][style*="height: calc(100vh - 84px)"],
+[style*="position: sticky"][style*="height: calc(-84px + 100vh)"]{height:calc(100svh - 64px)!important}
 [style*="position: sticky; top: 120px"]{position:static!important}
-[style*="grid-template-columns: minmax(0, 6fr) minmax(0, 5fr)"],[style*="grid-template-columns: minmax(0, 5fr) minmax(0, 6fr)"],[style*="grid-template-columns: minmax(0, 7fr) minmax(0, 5fr)"],[style*="grid-template-columns: minmax(0, 4fr) minmax(0, 7fr)"],[style*="grid-template-columns: minmax(0, 5fr) minmax(0, 7fr)"],[style*="grid-template-columns: minmax(0, 3fr) minmax(0, 8fr)"]{grid-template-columns:minmax(0,1fr)!important;gap:28px!important}
+[style*="grid-template-columns: minmax(0, 6fr) minmax(0, 5fr)"],
+[style*="grid-template-columns: minmax(0px, 6fr) minmax(0px, 5fr)"],[style*="grid-template-columns: minmax(0, 5fr) minmax(0, 6fr)"],[style*="grid-template-columns: minmax(0px, 5fr) minmax(0px, 6fr)"],[style*="grid-template-columns: minmax(0, 7fr) minmax(0, 5fr)"],[style*="grid-template-columns: minmax(0px, 7fr) minmax(0px, 5fr)"],[style*="grid-template-columns: minmax(0, 4fr) minmax(0, 7fr)"],[style*="grid-template-columns: minmax(0px, 4fr) minmax(0px, 7fr)"],[style*="grid-template-columns: minmax(0, 5fr) minmax(0, 7fr)"],[style*="grid-template-columns: minmax(0px, 5fr) minmax(0px, 7fr)"],[style*="grid-template-columns: minmax(0, 3fr) minmax(0, 8fr)"],[style*="grid-template-columns: minmax(0px, 3fr) minmax(0px, 8fr)"]{grid-template-columns:minmax(0,1fr)!important;gap:28px!important}
 .h2{font-size:32px!important;line-height:1.04!important}
 .lead{font-size:16px!important}
 .btnF{height:52px;padding:0 22px;font-size:16px}
 .ctaC{font-size:17px}
 .glass{height:40px;padding:0 14px;font-size:14px;gap:8px}
-form [style*="grid-template-columns: repeat(2, minmax(0, 1fr))"]{grid-template-columns:minmax(0,1fr)!important}
+form [style*="grid-template-columns: repeat(2, minmax(0, 1fr))"],
+form [style*="grid-template-columns: repeat(2, minmax(0px, 1fr))"]{grid-template-columns:minmax(0,1fr)!important}
 #contact h2{font-size:36px!important}
 #contact [style*="gap: 48px"]{gap:24px!important}
 #xsell{min-height:0!important;padding:56px 16px 40px!important}
@@ -221,10 +224,13 @@ header>a>img{height:32px!important}
 #hero .lead{font-size:15px!important}
 #hero [style*="font-size: clamp(72px, 9vw, 150px)"]{font-size:68px!important}
 #hero [style*="font-size: clamp(17px, 1.4vw, 22px)"]{font-size:15px!important}
-#hero [style*="font-size: 17px; color: rgba(244,243,239,.72)"]{font-size:15px!important}
+#hero [style*="font-size: 17px; color: rgba(244,243,239,.72)"],
+#hero [style*="font-size: 17px; color: rgba(244, 243, 239, 0.72)"]{font-size:15px!important}
 #hero>div>div>video{object-position:62% 50%!important}
-section[style*="padding: 12vh 4vw 0"]{padding:48px 16px 0!important}
-section[style*="padding: 12vh 4vw 0"]>.aida{margin-bottom:20px!important}
+section[style*="padding: 12vh 4vw 0"],
+section[style*="padding: 12vh 4vw 0px"]{padding:48px 16px 0!important}
+section[style*="padding: 12vh 4vw 0"]>.aida,
+section[style*="padding: 12vh 4vw 0px"]>.aida{margin-bottom:20px!important}
 #abSceneSec{height:auto!important}
 #abSceneSec>div{position:relative!important;top:auto!important;height:auto!important;padding:0!important;display:flex;flex-direction:column;gap:12px}
 .asCards{position:static!important;gap:12px!important}
@@ -244,24 +250,45 @@ section[style*="padding: 12vh 4vw 0"]>.aida{margin-bottom:20px!important}
 #impPin svg text{font-size:34px}
 .scNames{flex-direction:column!important;align-items:flex-start!important;gap:6px!important}
 .scNames span[style*="max-width: 30ch"]{display:none}
-#impPin [style*="grid-template-columns: minmax(0, 6fr) minmax(0, 5fr)"]{gap:12px!important}
-#impPin [style*="grid-template-columns: minmax(0, 7fr) minmax(0, 5fr)"]{gap:6px!important}
+#impPin [style*="grid-template-columns: minmax(0, 6fr) minmax(0, 5fr)"],
+#impPin [style*="grid-template-columns: minmax(0px, 6fr) minmax(0px, 5fr)"]{gap:12px!important}
+#impPin [style*="grid-template-columns: minmax(0, 7fr) minmax(0, 5fr)"],
+#impPin [style*="grid-template-columns: minmax(0px, 7fr) minmax(0px, 5fr)"]{gap:6px!important}
 #impPin [style*="display: flex; flex-direction: column; gap: 3vh;"]{gap:8px!important}
-#impPin [style*="font-size: 14px; color: rgba(244,243,239,.6)"]{font-size:12px!important}
-#impPin [style*="minmax(0, 1.3fr)"]{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr) minmax(0,1fr) 12px!important;gap:8px!important}
+#impPin [style*="font-size: 14px; color: rgba(244,243,239,.6)"],
+#impPin [style*="font-size: 14px; color: rgba(244, 243, 239, 0.6)"]{font-size:12px!important}
+#impPin [style*="minmax(0, 1.3fr)"],
+#impPin [style*="minmax(0px, 1.3fr)"]{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr) minmax(0,1fr) 12px!important;gap:8px!important}
 #impPin .ctaC-t{display:none}
 #impPin [style*="margin-top: 1.6vh; font-size: 12px"]{margin-top:6px!important;font-size:11px!important}
 #cases{padding:0 16px 64px!important}
-#cases [style*="padding: 4vh 0 5vh"]{gap:20px!important}
+#cases [style*="padding: 4vh 0 5vh"],
+#cases [style*="padding: 4vh 0px 5vh"]{gap:20px!important}
 #cases [style*="font-size: clamp(18px, 1.5vw, 24px)"]{font-size:16px!important}
 #cases [style*="font-size: clamp(24px, 2vw, 36px)"]{font-size:24px!important}
 #cases dl{grid-template-columns:88px minmax(0,1fr)!important;font-size:15px!important}
 #faq{padding:0 16px 64px!important}
 #faq button>span:first-child{font-size:18px!important}
-#faq p[style*="padding: 0 60px 3.4vh 0"]{padding:0 0 20px 0!important;font-size:16px!important}
+#faq p[style*="padding: 0 60px 3.4vh 0"],
+#faq p[style*="padding: 0px 60px 3.4vh 0px"]{padding:0 0 20px 0!important;font-size:16px!important}
 #contact{padding:64px 16px!important}
 }
 
+/* mobile-fix 05.11 */
+@media (max-width: 767px){
+#cases [style*="grid-template-columns: repeat(3, minmax(0, 1fr))"],
+#cases [style*="grid-template-columns: repeat(3, minmax(0px, 1fr))"]{grid-template-columns:minmax(0,1fr)!important}
+#cases button[aria-pressed]{min-height:0!important;padding:16px 56px 16px 16px!important}
+.ctaC{white-space:normal;flex-shrink:1;max-width:100%}
+#impPin [style*="minmax(0, 1.3fr)"],
+#impPin [style*="minmax(0px, 1.3fr)"]{font-size:12px!important}
+#impPin [style*="minmax(0px, 1.3fr)"]>*,#impPin [style*="minmax(0, 1.3fr)"]>*{overflow-wrap:anywhere;min-width:0}
+#impPin [style*="margin-top: 1.6vh; font-size: 12px"]{font-size:12px!important}
+}
+@media (max-width: 767px) and (max-height: 740px){
+#impPin svg[style*="max-height: 34vh"]{display:none!important}
+}
+/* /mobile-fix */
 </style>
 </helmet>
 <div style="width: 100%; background: #0D0D0E; position: relative; overflow-x: clip;">

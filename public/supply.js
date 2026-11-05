@@ -22,6 +22,8 @@ class Component extends PageLogic {
     var self = this;
     this.raf = requestAnimationFrame(function () {
       self.raf = 0;
+      var MM = window.innerWidth < 768;
+      if (MM !== !!self.state.M) self.setState({ M: MM, menu: MM ? self.state.menu : false });
       var el = document.getElementById('hero'), h = window.innerHeight || 900;
       if (!el) return;
       var rc = el.getBoundingClientRect();
@@ -175,6 +177,13 @@ class Component extends PageLogic {
     svv.asH = 'margin: 0; font-size: ' + r(6.6 - 3.1 * ae) + 'vw; line-height: .96; font-weight: 500; letter-spacing: -.045em; max-width: ' + r(17 + 1 * ae) + 'ch; opacity: ' + r(clamp((ae - 0.35) / 0.55)) + '; transform: translateY(' + r((1 - clamp((ae - 0.35) / 0.55)) * 24) + 'px);';
     svv.asLead = 'margin: 0; font-size: clamp(16px, 1.25vw, 20px); line-height: 1.5; color: rgba(244,243,239,.78); max-width: 44ch; opacity: ' + r(clamp((ae - 0.6) / 0.4)) + '; transform: translateY(' + r((1 - clamp((ae - 0.6) / 0.4)) * 16) + 'px);';
     for (var ak = 0; ak < 3; ak++) { var kq = ease(clamp((asp - 0.36 - ak * 0.16) / 0.16)); svv['asK' + ak] = 'opacity: ' + r(kq) + '; transform: translateY(' + r((1 - kq) * 40) + 'px);'; }
+    if (this.state.M) {
+      svv.asPanel = 'position: relative; height: 64svh; min-height: 420px; border-radius: 14px; overflow: hidden; background: #08080A;';
+      svv.asFade = 'opacity: 1;';
+      svv.asH = 'margin: 0; font-size: 32px; line-height: 1.04; font-weight: 500; letter-spacing: -.04em;';
+      for (var am = 0; am < 3; am++) svv['asK' + am] = '';
+      for (var xm = 0; xm < 5; xm++) svv['xsC' + xm] = svv['xsC' + xm].replace(/grid-column:[^;]*; grid-row:[^;]*;/, '');
+    }
     svv.abScene = true;
     // Импортозамещение: табло / таблица / карточки
     var imp = this.props.imp || 'Табло на скролле';
@@ -378,6 +387,11 @@ class Component extends PageLogic {
       svv['exC' + k] = 'exC' + (exA === k ? ' on' : '');
       svv['exHov' + k] = function () { if ((selfE.state.ex || 0) !== k) selfE.setState({ ex: k }); };
     })(ek);
+    var mOpen = !!this.state.M && !!this.state.menu, selfM = this;
+    svv.menuOpen = mOpen; svv.menuExp = mOpen ? 'true' : 'false';
+    svv.burgPath = mOpen ? 'M5 5l10 10M15 5L5 15' : 'M3 7h14M3 13h14';
+    svv.toggleMenu = function () { selfM.setState({ menu: !selfM.state.menu }); };
+    svv.closeMenu = function () { selfM.setState({ menu: false }); };
     return Object.assign(formVals, svv, this.svVals(), { ctaA: true, ctaB: false, ctaC: false, abSplit: ab === 'Фото + список', abReel: ab === 'Лента', abBento: ab === 'Мозаика', abChain: ab === 'Цепочка производства', abPhoto: ab === 'Фото-плитки', abList: ab === 'Крупный список', abTiles: ab === 'Плитки (исходный)', vWrap: vWrap, heroTxt: heroTxt, rdStyle: rdStyle, scStyle: scStyle, tempTxt: tempTxt, zoneTxt: zoneTxt, scW: scW, scMk: scMk });
   }
 }

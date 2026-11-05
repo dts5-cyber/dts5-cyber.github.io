@@ -452,6 +452,57 @@ textarea.inp{height:auto;min-height:92px;padding-top:14px;resize:vertical;line-h
 .coS b *{font:inherit;letter-spacing:inherit}
 @media (max-width: 900px){.coTop{grid-template-columns:minmax(0,1fr);gap:24px}.coStats{grid-template-columns:minmax(0,1fr)}.coS+.coS{padding-left:0;border-left:0;border-top:1px solid rgba(244,243,239,.12)}.coS{padding:24px 0}}
 @media (max-width: 767px){.coSec{padding:0 16px 80px}.coCard{padding:28px 20px}}
+/* mobile-fix 05.11 */
+.mburg{display:none;width:44px;height:44px;align-items:center;justify-content:center;border:1px solid rgba(244,243,239,.55);border-radius:4px;background:transparent;color:#F4F3EF;padding:0;cursor:pointer}
+.mmenu{display:none}
+.mml{display:flex;align-items:center;justify-content:space-between;min-height:58px;border-bottom:1px solid #2C2C2E;font-size:24px;font-weight:500;letter-spacing:-.02em;color:#F4F3EF}
+.mml:hover{text-decoration:none}
+@media (max-width: 767px){
+[style*="min-width: 1024px"]{min-width:0!important}
+/* шапка */
+header{height:64px!important;padding:0 16px!important}
+header img[style*="height: 40px"]{height:32px!important}
+header nav{gap:10px!important}
+.hnl{display:none!important}
+.mburg{display:inline-flex}
+.mmenu{display:flex}
+.hsq{width:44px;height:44px}
+.mCol{flex-direction:column!important;align-items:flex-start!important}
+.ctaC{white-space:normal;flex-shrink:1;max-width:100%}
+/* О предприятии: фото-блок, под ним 3 карточки */
+.abSeam{padding:48px 16px 0!important}
+#abSceneSec{height:auto!important}
+#abSceneSec>div{position:relative!important;top:auto!important;height:auto!important;margin:0!important;padding:0!important;display:flex;flex-direction:column;gap:12px;pointer-events:auto!important;background:none!important}
+#abSceneSec>div>div:nth-child(2){position:static!important;display:flex!important;flex-direction:column!important;gap:12px!important}
+#abSceneSec>div>div:first-child{visibility:visible!important}
+.abSeam>div[aria-hidden="true"]{display:none!important}
+.asCard h3{font-size:22px!important}
+.asCard>div:first-child{padding:16px 18px 12px!important}
+.asCard>div:last-child{padding:12px 18px 16px!important}
+.asCard>div:last-child>div{height:64px!important}
+/* сетки 2 колонки → 1 */
+[style*="grid-template-columns: minmax(0, 6fr) minmax(0, 5fr)"],[style*="grid-template-columns: minmax(0px, 6fr) minmax(0px, 5fr)"],
+[style*="grid-template-columns: minmax(0, 5fr) minmax(0, 6fr)"],[style*="grid-template-columns: minmax(0px, 5fr) minmax(0px, 6fr)"],
+[style*="grid-template-columns: minmax(0, 4fr) minmax(0, 7fr)"],[style*="grid-template-columns: minmax(0px, 4fr) minmax(0px, 7fr)"]{grid-template-columns:minmax(0,1fr)!important;gap:28px!important}
+[style*="position: sticky; top: 120px"]{position:static!important}
+/* форма */
+#contact{padding:64px 16px!important}
+#contact h2{font-size:34px!important}
+#contact [style*="gap: 5vh"]{gap:24px!important}
+form [style*="grid-template-columns: repeat(2, minmax(0, 1fr))"],form [style*="grid-template-columns: repeat(2, minmax(0px, 1fr))"]{grid-template-columns:minmax(0,1fr)!important}
+form .ctaA,form .btnF{width:100%;justify-content:center}
+/* кросс-продажи */
+#xsell{min-height:0!important;padding:56px 16px 40px!important}
+#xsGrid{display:flex!important;flex-direction:column!important;min-height:0!important}
+#xsGrid>a{min-height:150px}
+/* подвал */
+footer{padding:56px 16px 32px!important;gap:44px!important}
+footer img[style*="height: 52px"]{height:40px!important}
+footer [style*="font-size: 26px"]{font-size:22px!important}
+footer nav{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:28px 16px!important}
+footer nav>div[style*="span 2"]{grid-column:1/-1!important}
+}
+/* /mobile-fix */
 </style>
 </helmet>
 <div style="width: 100%; min-width: 1024px; background: #0D0D0E; position: relative;">
@@ -460,12 +511,14 @@ textarea.inp{height:auto;min-height:92px;padding-top:14px;resize:vertical;line-h
 <header style="position: sticky; top: 0; z-index: 50; height: 84px; padding: 0 4vw; display: flex; align-items: center; justify-content: space-between; background: rgba(13,13,14,.82); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border-bottom: 1px solid #1E1E20;">
 <a href="Main.dc.html" style="display: block;" aria-label="Ростех Техприёмка, на главную"><img src="../../assets/logo_white.png" alt="Ростех Техприёмка" style="height: 40px; width: auto; display: block;"></a>
 <nav aria-label="Основное меню" style="display: flex; align-items: center; gap: 40px;">
-<a href="Main.dc.html" class="navlink">РТ-Техприёмка</a>
-<a href="Main.dc.html#directions" class="navlink" aria-current="page" style="opacity: 1; box-shadow: inset 0 -1px 0 #F4F3EF; padding-bottom: 4px;">Решения</a>
-<a href="#" class="navlink">Карьера</a>
-<a href="#" class="navlink">Пресс-центр</a>
+<a href="Main.dc.html" class="navlink hnl">РТ-Техприёмка</a>
+<a href="Main.dc.html#directions" class="navlink hnl" aria-current="page" style="opacity: 1; box-shadow: inset 0 -1px 0 #F4F3EF; padding-bottom: 4px;">Решения</a>
+<a href="#" class="navlink hnl">Карьера</a>
+<a href="#" class="navlink hnl">Пресс-центр</a>
 <a href="#contact" class="hsq" aria-label="Подобрать решение" title="Подобрать решение" style="margin-left: -8px;"><svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 14 14 4M6 4h8v8"/></svg></a>
+<button type="button" class="mburg" aria-label="Меню" aria-expanded="{{menuExp}}" onClick="{{toggleMenu}}"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="{{burgPath}}"/></svg></button>
 </nav>
+<sc-if value="{{menuOpen}}" hint-placeholder-val="{{ false }}"><nav class="mmenu" aria-label="Меню" style="position: absolute; top: 100%; left: 0; right: 0; height: calc(100svh - 64px); box-sizing: border-box; padding: 16px 16px 28px; background: #0D0D0E; border-top: 1px solid #1E1E20; flex-direction: column; overflow-y: auto;"><a href="Main.dc.html" class="mml" onClick="{{closeMenu}}">РТ-Техприёмка<span aria-hidden="true">→</span></a><a href="Main.dc.html#directions" class="mml" onClick="{{closeMenu}}">Решения<span aria-hidden="true">→</span></a><a href="#" class="mml" onClick="{{closeMenu}}">Карьера<span aria-hidden="true">→</span></a><a href="#" class="mml" onClick="{{closeMenu}}">Пресс-центр<span aria-hidden="true">→</span></a><div style="display: flex; flex-direction: column; gap: 6px; margin-top: 28px;"><span class="cap">Телефон</span><a href="#" style="font-size: 22px; font-weight: 500;">+7 495 927-07-55</a></div><a href="#contact" class="btnF" onClick="{{closeMenu}}" style="margin-top: auto; justify-content: center;">Подобрать решение<span aria-hidden="true">→</span></a></nav></sc-if>
 </header>
 
 <!-- A · ATTENTION: первый экран — статус поставки по этапам -->
@@ -628,6 +681,8 @@ class Component extends DCLogic {
     var self = this;
     this.raf = requestAnimationFrame(function () {
       self.raf = 0;
+      var MM = window.innerWidth < 768;
+      if (MM !== !!self.state.M) self.setState({ M: MM, menu: MM ? self.state.menu : false });
       var el = document.getElementById('hero'), h = window.innerHeight || 900;
       if (!el) return;
       var rc = el.getBoundingClientRect();
@@ -781,6 +836,13 @@ class Component extends DCLogic {
     svv.asH = 'margin: 0; font-size: ' + r(6.6 - 3.1 * ae) + 'vw; line-height: .96; font-weight: 500; letter-spacing: -.045em; max-width: ' + r(17 + 1 * ae) + 'ch; opacity: ' + r(clamp((ae - 0.35) / 0.55)) + '; transform: translateY(' + r((1 - clamp((ae - 0.35) / 0.55)) * 24) + 'px);';
     svv.asLead = 'margin: 0; font-size: clamp(16px, 1.25vw, 20px); line-height: 1.5; color: rgba(244,243,239,.78); max-width: 44ch; opacity: ' + r(clamp((ae - 0.6) / 0.4)) + '; transform: translateY(' + r((1 - clamp((ae - 0.6) / 0.4)) * 16) + 'px);';
     for (var ak = 0; ak < 3; ak++) { var kq = ease(clamp((asp - 0.36 - ak * 0.16) / 0.16)); svv['asK' + ak] = 'opacity: ' + r(kq) + '; transform: translateY(' + r((1 - kq) * 40) + 'px);'; }
+    if (this.state.M) {
+      svv.asPanel = 'position: relative; height: 64svh; min-height: 420px; border-radius: 14px; overflow: hidden; background: #08080A;';
+      svv.asFade = 'opacity: 1;';
+      svv.asH = 'margin: 0; font-size: 32px; line-height: 1.04; font-weight: 500; letter-spacing: -.04em;';
+      for (var am = 0; am < 3; am++) svv['asK' + am] = '';
+      for (var xm = 0; xm < 5; xm++) svv['xsC' + xm] = svv['xsC' + xm].replace(/grid-column:[^;]*; grid-row:[^;]*;/, '');
+    }
     svv.abScene = true;
     // Импортозамещение: табло / таблица / карточки
     var imp = this.props.imp || 'Табло на скролле';
@@ -984,6 +1046,11 @@ class Component extends DCLogic {
       svv['exC' + k] = 'exC' + (exA === k ? ' on' : '');
       svv['exHov' + k] = function () { if ((selfE.state.ex || 0) !== k) selfE.setState({ ex: k }); };
     })(ek);
+    var mOpen = !!this.state.M && !!this.state.menu, selfM = this;
+    svv.menuOpen = mOpen; svv.menuExp = mOpen ? 'true' : 'false';
+    svv.burgPath = mOpen ? 'M5 5l10 10M15 5L5 15' : 'M3 7h14M3 13h14';
+    svv.toggleMenu = function () { selfM.setState({ menu: !selfM.state.menu }); };
+    svv.closeMenu = function () { selfM.setState({ menu: false }); };
     return Object.assign(formVals, svv, this.svVals(), { ctaA: true, ctaB: false, ctaC: false, abSplit: ab === 'Фото + список', abReel: ab === 'Лента', abBento: ab === 'Мозаика', abChain: ab === 'Цепочка производства', abPhoto: ab === 'Фото-плитки', abList: ab === 'Крупный список', abTiles: ab === 'Плитки (исходный)', vWrap: vWrap, heroTxt: heroTxt, rdStyle: rdStyle, scStyle: scStyle, tempTxt: tempTxt, zoneTxt: zoneTxt, scW: scW, scMk: scMk });
   }
 }
