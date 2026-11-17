@@ -1,0 +1,24 @@
+---
+import { ROUTES } from '../../data/routes';
+---
+<footer style="padding: 10vh 4vw 40px; background: #0A0A0B; border-top: 1px solid #242425; display: flex; flex-direction: column; gap: 9vh;">
+<div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 48px; flex-wrap: wrap;">
+<div style="display: flex; flex-direction: column; gap: 20px;">
+<img src="/assets/logo_white.png" alt="Ростех Техприёмка" width="200" height="40" style="height: 52px; width: auto; align-self: flex-start;">
+<span style="font-size: 15px; color: rgba(244,243,239,.62); max-width: 40ch; line-height: 1.5;">АО «РТ-Техприёмка» — техническая приёмка, контроль качества и развитие производства предприятий ГК «Ростех» и промышленности России.</span>
+</div>
+<div style="display: flex; gap: 48px; align-items: flex-end; flex-wrap: wrap;">
+<div style="display: flex; flex-direction: column; gap: 6px;"><span class="cap">Телефон</span><a href="tel:+74959270755" style="font-size: 26px; font-weight: 500; letter-spacing: -.01em;">+7 495 927-07-55</a></div>
+<div style="display: flex; flex-direction: column; gap: 6px;"><span class="cap">Почта</span><a href="mailto:info@rt-techpriemka.ru" style="font-size: 26px; font-weight: 500; letter-spacing: -.01em;">info@rt-techpriemka.ru</a></div>
+</div>
+</div>
+<nav aria-label="Карта сайта" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px; padding-top: 5vh; border-top: 1px solid #242425;">
+<div><a href="#" style="display: block; font-size: 18px; font-weight: 500; margin-bottom: 14px;">Техприёмка</a><a href="#" class="fl">История</a><a href="#" class="fl">Система менеджмента качества</a><a href="#" class="fl">Раскрытие информации</a><a href="#" class="fl">Закупки</a><a href="#" class="fl">Кадровая политика</a><a href="#" class="fl">Противодействие коррупции</a></div><div style="grid-column: span 2;"><a href={ROUTES.directions} style="display: block; font-size: 18px; font-weight: 500; margin-bottom: 14px;">Решения для бизнеса</a><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(5, auto); grid-auto-flow: column; column-gap: 32px;"><a href="#" class="fl">Автоматизация</a><a href="#" class="fl">Цифровизация и AI</a><a href="#" class="fl">Консалтинг</a><a href="#" class="fl">Контроль качества</a><a href="#" class="fl">Метрологическая служба</a><a href={ROUTES.quality} class="fl">Сертификация</a><a href={ROUTES.etalon} class="fl">Оборудование «Эталон»</a><a href={ROUTES.supply} class="fl">Снабжение</a><a href="#" class="fl">Полиграфия</a></div></div><div style="display: flex; flex-direction: column; gap: 28px;"><div><a href="#" style="display: block; font-size: 18px; font-weight: 500; margin-bottom: 14px;">Пресс-центр</a><a href="#" class="fl">Лента новостей</a></div><a href={ROUTES.career} style="display: block; font-size: 18px; font-weight: 500;">Карьера</a><a href="#" style="display: block; font-size: 18px; font-weight: 500;">Контакты</a></div>
+</nav>
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; padding-top: 28px; border-top: 1px solid #242425; font-size: 14px; color: #8C8B87;">
+<span>© 2026 АО «РТ-Техприёмка» · Государственная корпорация «Ростех»</span>
+<span>[Адрес головного офиса]</span>
+<a href="#" style="color: #8C8B87; text-decoration: underline; text-underline-offset: 4px;">Политика обработки персональных данных</a>
+<div style="display: flex; gap: 8px;"><a href="#" class="chip" style="height: 36px; display: inline-flex; align-items: center; font-size: 14px;">Telegram</a><a href="#" class="chip" style="height: 36px; display: inline-flex; align-items: center; font-size: 14px;">ВКонтакте</a></div>
+</div>
+</footer>

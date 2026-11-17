@@ -1,0 +1,47 @@
+---
+import '../styles/career-global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+  /** Класс на <body> для страничных переопределений общих стилей */
+  pageClass?: string;
+}
+
+const { title, description, ogImage = '/assets/logo_poster.jpg', pageClass } = Astro.props;
+const siteUrl = Astro.site ?? 'https://dts5-cyber.github.io';
+const canonical = new URL(Astro.url.pathname, siteUrl);
+const ogUrl = new URL(ogImage, siteUrl);
+---
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{title}</title>
+  <meta name="description" content={description}>
+  <link rel="canonical" href={canonical}>
+  <meta name="theme-color" content="#0D0D0E">
+  <meta name="color-scheme" content="dark">
+
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:site_name" content="РТ-Техприёмка">
+  <meta property="og:title" content={title}>
+  <meta property="og:description" content={description}>
+  <meta property="og:url" content={canonical}>
+  <meta property="og:image" content={ogUrl}>
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" type="image/png" href="/assets/logo_white.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
+  <slot name="head" />
+</head>
+<body class={pageClass}>
+  <a class="skip" href="#main">Перейти к содержимому</a>
+  <slot />
+</body>
+</html>

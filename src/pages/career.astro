@@ -1,0 +1,80 @@
+---
+import Base from '../layouts/CareerBase.astro';
+import Header from '../components/career/CareerHeader.astro';
+import Footer from '../components/career/CareerFooter.astro';
+import { careerConfig, heroImages, directions, demoVacancies, stories, steps, careBenefits } from '../data/career';
+import CareerIcon from '../components/career/CareerIcon.astro';
+import { vacancyIcon } from '../data/career-icons';
+import '../styles/career.css';
+const vacancies = careerConfig.demo ? demoVacancies.slice(0, 3) : [];
+---
+<Base title="Карьера — РТ-Техприёмка" description="Инженерные профессии, цифровые технологии и работа в команде РТ-Техприёмки. Демонстрационный макет карьерного раздела." pageClass="page-career" ogImage="/assets/career/career-hero.webp">
+  <meta slot="head" name="robots" content="noindex, nofollow" />
+  <Header />
+  <main id="main">
+    <section class="career-hero" aria-labelledby="career-title">
+      <div class="hero-content">
+        <h1 id="career-title">Строй промышленность <span class="cu">будущего</span> <span class="hero-title-together">вместе с нами</span></h1>
+        <a class="ctaA hero-cta" href="#vacancies">Смотреть вакансии <span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="hero-gallery" aria-hidden="true"><div class="hero-gallery-track">{[0, 1].map(copy => <div class="hero-gallery-group">{heroImages.map(photo => <div class="hero-gallery-photo"><img src={`/assets/career/${photo.image}.webp`} alt="" width={photo.width} height={photo.height} style={`object-position:${photo.position}`} loading={copy === 0 ? 'eager' : 'lazy'} /></div>)}</div>)}</div></div>
+      <p class="hero-demo">Демонстрационные иллюстрации · место для фотографий проектов компании</p>
+    </section>
+
+    <section class="career-section" id="career-directions" aria-labelledby="directions-title">
+      <div class="section-heading directions-heading"><h2 class="h2" id="directions-title">Найди своё <span class="cu">направление</span></h2></div>
+      <div class="direction-filters" role="tablist" aria-label="Направления карьеры">{directions.map((d, i) => <button type="button" class="direction-filter" id={`direction-tab-${i}`} role="tab" aria-selected={i === 0 ? 'true' : 'false'} aria-controls={`direction-panel-${i}`} tabindex={i === 0 ? 0 : -1} data-direction-tab={i}>{d.label}</button>)}</div>
+      <div class="direction-panels">{directions.map((d, i) => <div class="direction-panel" id={`direction-panel-${i}`} role="tabpanel" aria-labelledby={`direction-tab-${i}`} hidden={i !== 0} tabindex="0"><article class="direction-task-card"><div class="direction-card-meta"><span>{String(i+1).padStart(2,'0')} / {String(directions.length).padStart(2,'0')}</span><span>{d.title}</span></div><h3>{d.heading}</h3><p>{d.text}</p><ul>{d.tasks.map(task => <li>{task}</li>)}</ul><a class="ctaA" href="#resume" data-select-direction={d.title}>Мне интересно <span aria-hidden="true">↗</span></a></article><figure class="direction-image-card"><img src={`/assets/career/${d.image}.webp`} alt={`Демонстрационная иллюстрация: ${d.title}`} loading="lazy" width={d.width} height={d.height} style={`object-position:${d.position}`} /><figcaption>Демонстрационная иллюстрация</figcaption></figure></div>)}</div>
+    </section>
+
+    <section class="career-section opportunities" id="opportunities" aria-labelledby="opportunities-title">
+      <div class="section-heading opportunities-heading"><h2 class="h2" id="opportunities-title">Работа, в которой есть<br /><span class="cu">больше возможностей</span></h2></div>
+      <div class="employer-grid">
+        <article class="federal-card">
+          <img src="/assets/career/career-lens-3.webp" alt="Демонстрационная иллюстрация современного промышленного производства" loading="lazy" width="1664" height="936" />
+          <div class="federal-card-content"><h3>Участие в проектах <br />федерального масштаба</h3><p>Роботизация, цифровые продукты и инженерные решения для российских промышленных предприятий.</p><small>Демонстрационная иллюстрация</small></div>
+        </article>
+        <article class="growth-card">
+          <span class="growth-icon"><CareerIcon name="growth" /></span>
+          <h3>Профессиональное <br />развитие</h3>
+          <ul><li><span aria-hidden="true">↗</span>Программы обучения</li><li><span aria-hidden="true">↗</span>Карьерное развитие</li><li><span aria-hidden="true">↗</span>Работа с ведущими экспертами промышленности</li></ul>
+          <p class="fine-print">Конкретные программы и условия развития уточняются у HR.</p>
+        </article>
+      </div>
+      <div class="employee-care" aria-labelledby="employee-care-title">
+        <div class="care-heading"><h3 id="employee-care-title">Забота о том, <span class="cu">что важно</span></h3><p>ДМС подтверждено. Дополнительные программы представлены для согласования с HR.</p></div>
+        <div class="benefit-grid">{careBenefits.map(benefit => <article class:list={['benefit-card', { 'benefit-confirmed': benefit.confirmed }]}><span class="benefit-icon"><CareerIcon name={benefit.icon} /></span><div><h4>{benefit.title}</h4>{benefit.confirmed && <p>{benefit.note}</p>}</div></article>)}</div>
+        <p class="fine-print benefits-note">Дополнительные программы требуют подтверждения и не являются гарантированными условиями трудоустройства.</p>
+      </div>
+      <div class="rating"><div class="rating-score">4,5 <span>/ 5</span></div><div><span class="stars" aria-label="4,5 из 5 звёзд">★★★★<span>★</span></span><p>Оценка работодателя на hh.ru</p></div><small>Рейтинг из задания для макета.<br />Актуальность и ссылка на отзывы требуют проверки.</small><a href={careerConfig.employerUrl} target="_blank" rel="noopener noreferrer">Компания на hh.ru ↗</a></div>
+    </section>
+
+    <section class="career-section vacancy-section" id="vacancies" aria-labelledby="vacancies-title" data-demo={String(careerConfig.demo)} data-endpoint={careerConfig.vacanciesEndpoint}>
+      <div class="section-heading vacancies-heading"><h2 class="h2" id="vacancies-title">Открытые вакансии</h2><p class="section-note" id="vacancy-notice">{careerConfig.demo ? 'Три примера для макета. Это не реальные открытые позиции.' : 'Актуальные позиции доступны на странице работодателя на hh.ru.'}</p></div>
+      <div class="vacancy-grid">
+        <div id="vacancy-list">{vacancies.map(v => <article class="vacancy-card"><div class="vacancy-card-top"><span class="vacancy-icon"><CareerIcon name={vacancyIcon(v.direction)} /></span><span class="demo-label">Демонстрационная вакансия</span></div><div class="vacancy-description"><h3>{v.title}</h3><p>{v.direction}</p></div><div class="vacancy-meta"><span>{v.city}</span>{v.format && <span>{v.format}</span>}</div><button class="vacancy-more" type="button" data-vacancy={v.id}>Подробнее <span aria-hidden="true">↗</span></button></article>)}</div>
+        <a class="vacancy-all-card" href={careerConfig.employerUrl} target="_blank" rel="noopener noreferrer"><span class="vacancy-icon"><CareerIcon name="jobs" /></span><h3>Все вакансии<br />на hh.ru</h3><span class="vacancy-all-action">Перейти на hh.ru <span aria-hidden="true">↗</span></span></a>
+      </div>
+      <p id="vacancy-empty" hidden={vacancies.length > 0}>Сейчас на сайте нет доступных вакансий. Посмотри предложения на странице работодателя.</p>
+      <p class="fine-print vacancy-source-note">{careerConfig.demo ? 'Автоматическое обновление вакансий пока не подключено.' : 'Проверяй условия и доступность позиции на hh.ru.'}</p>
+    </section>
+
+    <section class="career-section people-section" aria-labelledby="people-title">
+      <div class="section-heading"><span class="section-index">04 / Люди компании</span><div><h2 class="h2" id="people-title">За каждым большим<br />проектом <span class="cu">стоят люди</span></h2><p class="section-note">Примеры историй. Имена, должности, фотографии и тексты предстоит заменить материалами сотрудников.</p></div></div>
+      <div class="stories">{stories.map((s,i) => <article class={`story story-${i+1}`}><div class="story-photo"><img src={`/assets/career/${s.image}.webp`} style={`object-position:${s.position}`} alt="Демонстрационный образ, не фотография сотрудника компании" loading="lazy" width="1536" height="1024" /><span>Демонстрационный образ</span></div><div class="story-author"><span>Имя сотрудника</span><span>Должность</span></div><h3>{s.title}</h3><p>{s.text}</p><button type="button" class="text-action" data-story={i}>Читать историю <span aria-hidden="true">↗</span></button></article>)}</div>
+    </section>
+
+    <section class="career-section hiring-section" aria-labelledby="hiring-title"><div class="section-heading"><span class="section-index">05 / Как стать частью команды</span><h2 class="h2" id="hiring-title">От знакомства<br />до первого рабочего дня</h2></div><ol class="hiring-steps">{steps.map(([title,text],i)=><li><span class="step-number">0{i+1}</span><h3>{title}</h3><p>{text}</p></li>)}</ol><p class="fine-print">Предварительные этапы. Точный порядок трудоустройства необходимо согласовать с HR.</p></section>
+
+    <section class="career-section resume-section" id="resume" aria-labelledby="resume-title"><div class="resume-intro"><span class="section-index">06 / Твой следующий шаг</span><h2 class="h2" id="resume-title">Не нашёл <br />подходящую<br /><span class="cu">вакансию?</span></h2><p>Оставь резюме и расскажи, в каком направлении хотел бы работать. Если появится подходящая позиция, мы сможем рассмотреть твою кандидатуру.</p><img src="/assets/career/career-cta.webp" alt="Демонстрационная иллюстрация производственной среды" loading="lazy" width="1536" height="1024" /><small>Демонстрационная иллюстрация</small></div>
+      <div class="resume-form-wrap"><span class="demo-label">Демонстрационная форма</span><p class="fine-print">Можно проверить заполнение. Отправка резюме не подключена, данные останутся в браузере до закрытия страницы.</p>
+      <form id="career-resume" novalidate data-endpoint={careerConfig.resumeEndpoint}>
+        <div class="resume-fields"><div class="fld full"><label class="fld-l" for="resume-name">Имя и фамилия *</label><input class="inp" id="resume-name" name="name" autocomplete="name" required minlength="3" placeholder="Как к тебе обращаться" aria-describedby="error-name" /><span class="err" id="error-name"></span></div><div class="fld"><label class="fld-l" for="resume-phone">Телефон *</label><input class="inp" id="resume-phone" name="phone" type="tel" autocomplete="tel" required placeholder="+7 (___) ___-__-__" aria-describedby="error-phone" /><span class="err" id="error-phone"></span></div><div class="fld"><label class="fld-l" for="resume-email">Электронная почта *</label><input class="inp" id="resume-email" name="email" type="email" autocomplete="email" required placeholder="name@example.ru" aria-describedby="error-email" /><span class="err" id="error-email"></span></div><div class="fld full"><label class="fld-l" for="resume-direction">Интересующее направление *</label><select class="inp" id="resume-direction" name="direction" required aria-describedby="error-direction"><option value="">Выбери направление</option>{directions.map(d=><option>{d.title}</option>)}</select><span class="err" id="error-direction"></span></div><div class="fld full"><label class="upload" for="resume-file"><span aria-hidden="true">↥</span><span>Прикрепить резюме<small id="resume-filename">PDF, DOC или DOCX · до 10 МБ</small></span><input id="resume-file" name="resume" type="file" accept=".pdf,.doc,.docx" required aria-describedby="error-resume" /></label><span class="err" id="error-resume"></span></div></div>
+        <label class="resume-consent"><input name="consent" type="checkbox" required aria-describedby="error-consent" /><span>Согласен на обработку персональных данных. <button type="button" class="legal-link" data-legal>Текст согласия и политика обработки данных</button></span></label><span class="err" id="error-consent"></span><p class="fine-print legal-note">Тексты и ссылки на юридические документы добавляются после согласования. В макете согласие не используется для обработки данных.</p><button type="submit" class="btnF">Отправить резюме <span aria-hidden="true">↗</span></button><p id="resume-status" role="status" aria-live="polite"></p>
+      </form></div>
+    </section>
+  </main>
+  <Footer />
+  <dialog id="career-dialog" aria-labelledby="career-dialog-title"><button type="button" class="dialog-close" aria-label="Закрыть">×</button><span class="demo-label">Материалы для согласования</span><h2 id="career-dialog-title"></h2><p id="career-dialog-text"></p><button type="button" class="ctaA dialog-dismiss">Понятно</button></dialog>
+  <script>import '../scripts/career';</script>
+</Base>

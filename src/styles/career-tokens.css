@@ -1,0 +1,20 @@
+/* Дизайн-токены rttec.ru (из макета Claude Design, v2) */
+:root {
+  --bg: #0D0D0E;
+  --bg-footer: #0A0A0B;
+  --card: #121213;
+  --card-2: #141415;
+  --fg: #F4F3EF;
+  --fg-mute: rgba(244, 243, 239, .62);
+  --fg-soft: rgba(244, 243, 239, .72);
+  --line: #2C2C2E;
+  --line-footer: #242425;
+  --cu: #F19E65;
+  --cu-grad: linear-gradient(100deg, #FFF1E2 0%, #FFD190 30%, #F19E65 60%, #B05A33 100%);
+  --err: #FF6B6B;
+  --font: 'Onest', system-ui, sans-serif;
+  --gutter: 4vw;
+  --header-h: 84px;
+  --r-btn: 4px;
+  --ease-out: cubic-bezier(.2, .7, 0, 1);
+}
