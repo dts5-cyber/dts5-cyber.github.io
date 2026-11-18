@@ -371,14 +371,14 @@ class Component extends PageLogic {
       e.preventDefault();
       var f = e.currentTarget.elements;
       var nm = f.fname.value.trim(), ph = f.fphone.value.replace(/\D/g, ''), ml = f.femail.value.trim();
-      var er = { n: !nm, p: ph.length < 10, m: ml !== '' && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(ml), a: !selfF.state.agree };
+      var er = { n: !nm, p: ph.length < 10, m: ml === '' ? 'e' : (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(ml) ? 'f' : false), a: !selfF.state.agree };
       if (er.n || er.p || er.m || er.a) { selfF.setState({ ferr: er }); return; }
       selfF.setState({ sent: true, ferr: {} });
     };
     var formVals = {
       submitForm: submitForm, formOpen: !this.state.sent, sent: this.state.sent,
       inpName: ferr.n ? 'inp bad' : 'inp', inpPhone: ferr.p ? 'inp bad' : 'inp', inpMail: ferr.m ? 'inp bad' : 'inp',
-      errName: ferr.n ? 'Укажите имя' : '', errPhone: ferr.p ? 'Укажите телефон — 10–11 цифр' : '', errMail: ferr.m ? 'Проверьте адрес почты' : '',
+      errName: ferr.n ? 'Укажите имя' : '', errPhone: ferr.p ? 'Укажите телефон — 10–11 цифр' : '', errMail: ferr.m === 'e' ? 'Укажите почту' : ferr.m ? 'Проверьте адрес почты' : '',
       errAgree: ferr.a ? 'Нужно согласие, чтобы отправить заявку' : '',
       agree: this.state.agree, agreeAria: this.state.agree ? 'true' : 'false', cbxCls: 'cbx' + (this.state.agree ? ' on' : '') + (ferr.a && !this.state.agree ? ' bad' : ''),
       toggleAgree: function () { selfF.setState({ agree: !selfF.state.agree }); },
