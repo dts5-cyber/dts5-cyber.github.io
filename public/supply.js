@@ -362,7 +362,7 @@ class Component extends PageLogic {
     if (MK) for (var xm2 = 0; xm2 < 5; xm2++) if (svv['xsC' + xm2]) svv['xsC' + xm2] = svv['xsC' + xm2].replace(/grid-column:[^;]*; grid-row:[^;]*;/, '');
 
     // Модальная форма по клику на карточки направлений
-    var MDN = ['Оборудование и комплектующие', 'Электронная компонентная база', 'Металлопрокат', 'Ферросплавы', 'Системы хранения', 'Освоение продукции под задачу заказчика'];
+    var MDN = ['Оборудование и комплектующие', 'Электронная компонентная база', 'Металлопрокат', 'Ферросплавы', 'Системы хранения', 'Индивидуальное производство'];
     var selfM = this, md = this.state.md, mdErr = this.state.mdErr || {};
     MDN.forEach(function (n, i) {
       svv['mdOpen' + i] = function () { selfM.setState({ md: i, mdSent: false, mdErr: {} }); };
