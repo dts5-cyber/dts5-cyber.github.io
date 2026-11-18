@@ -10,12 +10,72 @@ class Component extends PageLogic {
     window.addEventListener('resize', this.onScroll);
     this.svInit();
     this.rmInit();
+    this.autoInit();
     this.onScroll();
+  }
+  // Первый скролл вниз с самого верха плавно прокручивает hero-сцену до конца блока «О предприятии»
+  autoInit() {
+    var self = this;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var busy = false, ty0 = null;
+    function target() {
+      var ab = document.getElementById('abSceneSec'); if (!ab) return 0;
+      var top = ab.getBoundingClientRect().top + window.scrollY;
+      if (window.innerWidth < 768) return Math.max(0, top - 64);
+      return Math.max(0, top + ab.offsetHeight - window.innerHeight);
+    }
+    function ease(t) { return -(Math.cos(Math.PI * t) - 1) / 2; }
+    function go(y) { try { window.scrollTo({ top: y, behavior: 'instant' }); } catch (e) { window.scrollTo(0, y); } }
+    function run() {
+      var y0 = window.scrollY, d = target() - y0;
+      if (d < 40) return false;
+      var dur = Math.max(2600, Math.min(6000, d * 1.15)), t0 = performance.now();
+      busy = true;
+      function step(t) {
+        if (!busy) return;
+        var k = Math.min(1, (t - t0) / dur);
+        go(y0 + d * ease(k));
+        if (k < 1) self.autoRaf = requestAnimationFrame(step); else busy = false;
+      }
+      self.autoRaf = requestAnimationFrame(step);
+      return true;
+    }
+    function armed() { return window.scrollY < 40; }
+    function typing(e) { return /^(input|textarea|select)$/i.test((e.target && e.target.tagName) || ''); }
+    var KEYS = [' ', 'PageDown', 'ArrowDown', 'PageUp', 'ArrowUp', 'Home', 'End'];
+    this.onAutoWheel = function (e) {
+      if (busy) { e.preventDefault(); return; }
+      if (e.deltaY > 0 && armed() && run()) e.preventDefault();
+    };
+    this.onAutoTS = function (e) { ty0 = e.touches && e.touches[0] ? e.touches[0].clientY : null; };
+    this.onAutoTM = function (e) {
+      if (busy) { e.preventDefault(); return; }
+      if (ty0 != null && e.touches && e.touches[0] && ty0 - e.touches[0].clientY > 8 && armed() && run()) e.preventDefault();
+    };
+    this.onAutoKey = function (e) {
+      if (typing(e)) return;
+      if (busy) { if (e.key === 'Escape') busy = false; else if (KEYS.indexOf(e.key) >= 0) e.preventDefault(); return; }
+      if ((e.key === ' ' || e.key === 'PageDown' || e.key === 'ArrowDown') && armed() && run()) e.preventDefault();
+    };
+    this.onAutoStop = function () { busy = false; };
+    window.addEventListener('wheel', this.onAutoWheel, { passive: false });
+    window.addEventListener('touchstart', this.onAutoTS, { passive: true });
+    window.addEventListener('touchmove', this.onAutoTM, { passive: false });
+    window.addEventListener('keydown', this.onAutoKey);
+    window.addEventListener('mousedown', this.onAutoStop);
   }
   componentWillUnmount() {
     window.removeEventListener('scroll', this.onScroll);
     window.removeEventListener('resize', this.onScroll);
     if (this.raf) cancelAnimationFrame(this.raf);
+    if (this.autoRaf) cancelAnimationFrame(this.autoRaf);
+    if (this.onAutoWheel) {
+      window.removeEventListener('wheel', this.onAutoWheel);
+      window.removeEventListener('touchstart', this.onAutoTS);
+      window.removeEventListener('touchmove', this.onAutoTM);
+      window.removeEventListener('keydown', this.onAutoKey);
+      window.removeEventListener('mousedown', this.onAutoStop);
+    }
   }
   onScroll() {
     if (this.raf) return;
