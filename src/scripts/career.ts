@@ -1,14 +1,57 @@
 import { careerIcons, vacancyIcon } from '../data/career-icons';
-import { demoVacancies, stories, type Vacancy } from '../data/career';
+import { stories, type Vacancy } from '../data/career';
 
 const dialog = document.querySelector<HTMLDialogElement>('#career-dialog')!;
-const openDialog = (title: string, text: string) => {
+const dialogByline = document.querySelector<HTMLParagraphElement>('#career-dialog-byline')!;
+const dialogLabel = document.querySelector('#career-dialog-label')!;
+const dialogText = document.querySelector('#career-dialog-text')!;
+const openDialog = (title: string, text: string | string[], byline = '') => {
   document.querySelector('#career-dialog-title')!.textContent = title;
-  document.querySelector('#career-dialog-text')!.textContent = text;
+  dialogLabel.textContent = byline ? 'Вымышленная история' : 'Материалы для согласования';
+  dialogByline.textContent = byline;
+  dialogByline.hidden = !byline;
+  const paragraphs = Array.isArray(text) ? text : [text];
+  dialogText.replaceChildren(...paragraphs.map(content => {
+    const paragraph = document.createElement('p');
+    paragraph.textContent = content;
+    return paragraph;
+  }));
   dialog.showModal();
 };
-dialog.querySelectorAll('button').forEach(b => b.addEventListener('click', () => dialog.close()));
-dialog.addEventListener('click', e => { if (e.target === dialog) { const r = dialog.getBoundingClientRect(); if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) dialog.close(); } });
+dialog.querySelector('.dialog-close')!.addEventListener('click', () => dialog.close());
+dialog.addEventListener('click', event => {
+  if (event.target !== dialog) return;
+  const bounds = dialog.getBoundingClientRect();
+  if (event.clientX < bounds.left || event.clientX > bounds.right ||
+      event.clientY < bounds.top || event.clientY > bounds.bottom) {
+    dialog.close();
+  }
+});
+
+document.querySelectorAll<HTMLElement>('.benefit-info').forEach(info => {
+  const button = info.querySelector('button')!;
+  const note = info.querySelector<HTMLElement>('.benefit-info-note')!;
+
+  function showNote(visible: boolean) {
+    note.hidden = !visible;
+    button.setAttribute('aria-expanded', String(visible));
+  }
+
+  info.addEventListener('pointerenter', event => {
+    if (event.pointerType === 'mouse') showNote(true);
+  });
+  info.addEventListener('pointerleave', event => {
+    if (event.pointerType === 'mouse') showNote(false);
+  });
+  button.addEventListener('click', () => showNote(note.hasAttribute('hidden')));
+  button.addEventListener('blur', () => showNote(false));
+  document.addEventListener('pointerdown', event => {
+    if (!info.contains(event.target as Node)) showNote(false);
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') showNote(false);
+  });
+});
 
 const directionTabs = [...document.querySelectorAll<HTMLButtonElement>('[data-direction-tab]')];
 function selectDirection(index: number, focus = false) {
@@ -38,13 +81,9 @@ directionTabs.forEach((tab, index) => {
 document.querySelectorAll<HTMLAnchorElement>('[data-select-direction]').forEach(a => a.addEventListener('click', () => {
   document.querySelector<HTMLSelectElement>('#resume-direction')!.value = a.dataset.selectDirection!;
 }));
-document.querySelectorAll<HTMLButtonElement>('[data-vacancy]').forEach(button => button.addEventListener('click', () => {
-  const vacancy = demoVacancies.find(v => v.id === button.dataset.vacancy)!;
-  openDialog(vacancy.title, 'Это пример вакансии для согласования дизайна. Должностные обязанности, условия и требования добавляются после получения данных HR. Реальные открытые позиции можно посмотреть по кнопке «Все вакансии на hh.ru».');
-}));
 document.querySelectorAll<HTMLButtonElement>('[data-story]').forEach(button => button.addEventListener('click', () => {
   const story = stories[Number(button.dataset.story)];
-  openDialog(story.title, `${story.text} Это место для будущего интервью. Реальные имя, должность, история и фотография сотрудника пока не предоставлены.`);
+  openDialog(story.title, story.paragraphs, `${story.name} · ${story.role}`);
 }));
 document.querySelector('[data-legal]')!.addEventListener('click', () => openDialog('Документы по обработке данных', 'Здесь будут ссылки на согласованные юридические документы: согласие на обработку персональных данных и политику их обработки. До подключения документов и обработчика форма работает только как макет.'));
 
@@ -74,7 +113,7 @@ async function loadVacancies() {
       description.append(title, direction);
       const meta = document.createElement('div'); meta.className = 'vacancy-meta';
       for (const text of [v.city, v.format].filter(Boolean)) { const span = document.createElement('span'); span.textContent = text!; meta.append(span); }
-      const link = document.createElement('a'); link.className = 'vacancy-more'; link.href = v.url!; link.textContent = 'Подробнее ↗'; link.target = '_blank'; link.rel = 'noopener noreferrer';
+      const link = document.createElement('a'); link.className = 'vacancy-more'; link.href = v.url; link.textContent = 'Подробнее ↗'; link.target = '_blank'; link.rel = 'noopener noreferrer';
       row.append(top, description, meta, link); list.append(row);
     }
     document.querySelector<HTMLElement>('#vacancy-empty')!.hidden = items.length > 0;
