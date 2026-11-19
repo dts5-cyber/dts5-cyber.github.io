@@ -592,7 +592,7 @@ footer nav>div[style*="span 2"]{grid-column:1/-1!important}
 <p style="margin: 0; font-size: clamp(17px, 1.35vw, 21px); line-height: 1.45; color: rgba(244,243,239,.7); max-width: 38ch;">Опишите потребность — команда АО «РТ-Техпоставка» подготовит предложения материально-технического обеспечения под вашу производственную задачу.</p>
 <div style="display: flex; gap: 48px; flex-wrap: wrap;">
 <div style="display: flex; flex-direction: column; gap: 6px;"><span class="cap">Телефон</span><a href="#" style="font-size: 22px; font-weight: 500;">+7 495 927-07-57</a></div>
-<div style="display: flex; flex-direction: column; gap: 6px;"><span class="cap">Почта</span><a href="#" style="font-size: 22px; font-weight: 500;">info@rt-techpriemka.ru</a></div>
+<div style="display: flex; flex-direction: column; gap: 6px;"><span class="cap">Почта</span><a href="#" style="font-size: 22px; font-weight: 500;">info@rttechpostavka.ru</a></div>
 </div>
 </div>
 
@@ -643,7 +643,7 @@ footer nav>div[style*="span 2"]{grid-column:1/-1!important}
 </div>
 <div style="display: flex; gap: 48px; align-items: flex-end; flex-wrap: wrap;">
 <div style="display: flex; flex-direction: column; gap: 6px;"><span class="cap">Телефон</span><a href="#" style="font-size: 26px; font-weight: 500; letter-spacing: -.01em;">+7 495 927-07-57</a></div>
-<div style="display: flex; flex-direction: column; gap: 6px;"><span class="cap">Почта</span><a href="#" style="font-size: 26px; font-weight: 500; letter-spacing: -.01em;">info@rt-techpriemka.ru</a></div>
+<div style="display: flex; flex-direction: column; gap: 6px;"><span class="cap">Почта</span><a href="#" style="font-size: 26px; font-weight: 500; letter-spacing: -.01em;">info@rttechpostavka.ru</a></div>
 </div>
 </div>
 <nav aria-label="Карта сайта" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px; padding-top: 5vh; border-top: 1px solid #242425;">
@@ -802,7 +802,7 @@ class Component extends DCLogic {
     var rcur = -1; for (var ri = 0; ri < 5; ri++) { var on = rmp >= rfr[ri] - 0.01; if (on) rcur = ri; rmv['rmN' + ri] = on ? 'rmOn' : ''; rmv['rmL' + ri] = on ? 'rmOnL' : ''; }
     if (rcur >= 0) rmv['rmL' + rcur] += ' vCur';
     var coK = this.state.coK || 0;
-    rmv.coN0 = String(Math.round(10 * coK)); rmv.coN1 = String(Math.round(3300 * coK / 10) * 10); rmv.coN2 = String(Math.round(50 * coK));
+    rmv.coN0 = String(Math.round(6 * coK)); rmv.coN1 = String(Math.round(3300 * coK / 10) * 10); rmv.coN2 = String(Math.round(50 * coK));
     return Object.assign(rmv, { rtCls: this.state.rtOn ? 'imp-on' : '', svC1: st(o1, -1), svC2: st(o2, 1), svC3: st(o3, 1), svR0: act === 0 ? 'on' : '', svR1: act === 1 ? 'on' : '', svR2: act === 2 ? 'on' : '',
       svBar: 'width: ' + r(cl(hp) * 100) + '%;', svHint: 'opacity: ' + r(1 - cl(hp / 0.06)) + ';', svMetaS: 'opacity: ' + r(1 - cl((hp - 0.8) / 0.12)) + ';', svFr: String(fr).padStart(3, '0') });
   }

@@ -140,7 +140,7 @@ class Component extends PageLogic {
     var rcur = -1; for (var ri = 0; ri < 5; ri++) { var on = rmp >= rfr[ri] - 0.01; if (on) rcur = ri; rmv['rmN' + ri] = on ? 'rmOn' : ''; rmv['rmL' + ri] = on ? 'rmOnL' : ''; }
     if (rcur >= 0) rmv['rmL' + rcur] += ' vCur';
     var coK = this.state.coK || 0;
-    rmv.coN0 = String(Math.round(10 * coK)); rmv.coN1 = String(Math.round(3300 * coK / 10) * 10); rmv.coN2 = String(Math.round(50 * coK));
+    rmv.coN0 = String(Math.round(6 * coK)); rmv.coN1 = String(Math.round(3300 * coK / 10) * 10); rmv.coN2 = String(Math.round(50 * coK));
     return Object.assign(rmv, { rtCls: this.state.rtOn ? 'imp-on' : '', svC1: st(o1, -1), svC2: st(o2, 1), svC3: st(o3, 1), svR0: act === 0 ? 'on' : '', svR1: act === 1 ? 'on' : '', svR2: act === 2 ? 'on' : '',
       svBar: 'width: ' + r(cl(hp) * 100) + '%;', svHint: 'opacity: ' + r(1 - cl(hp / 0.06)) + ';', svMetaS: 'opacity: ' + r(1 - cl((hp - 0.8) / 0.12)) + ';', svFr: String(fr).padStart(3, '0') });
   }
