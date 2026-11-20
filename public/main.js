@@ -139,7 +139,7 @@ class Component extends PageLogic {
       var links = d.links.map(function (t, j) {
         var o = clamp(late * 1.8 - j * 0.16);
         return {
-          t: t, n: '0' + (j + 1), notFirst: j > 0, href: t.indexOf('Эталон') >= 0 ? '/solutions/etalon' : (t === 'Сертификация' ? '/solutions/quality' : (t === 'Снабжение' ? '/solutions/supply' : '#')),
+          t: t, n: '0' + (j + 1), notFirst: j > 0, href: t.indexOf('Эталон') >= 0 ? '/solutions/etalon' : (t === 'Сертификация' ? '/solutions/quality' : (t === 'Снабжение' ? '/solutions/supply' : (t === 'Метрологическая служба' ? '/solutions/metrology' : '#'))),
           low: j === 0 ? t : (t === 'AI' ? t : t.charAt(0).toLowerCase() + t.slice(1)),
           style: 'border-top: 1px solid #2C2C2E; opacity: ' + r(o) + '; transform: translateY(' + r((1 - o) * 14) + 'px);',
           cStyle: 'opacity: ' + r(o) + '; transform: translateY(' + r((1 - o) * 16) + 'px);',
