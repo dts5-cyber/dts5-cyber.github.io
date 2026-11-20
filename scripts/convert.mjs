@@ -1,8 +1,8 @@
 import fs from 'node:fs';
 import vm from 'node:vm';
 import {parseHTML} from 'linkedom';
-const routes={Main:'/',Etalon:'/solutions/etalon',Quality:'/solutions/quality',Supply:'/solutions/supply'};
-const titles={Main:'РТ-Техприёмка — решения для промышленности',Etalon:'Эталон — датчики и оборудование',Quality:'Кволити+ — сертификация, экология и обучение',Supply:'РТ-Техпоставка — снабжение предприятий'};
+const routes={Main:'/',Etalon:'/solutions/etalon',Quality:'/solutions/quality',Supply:'/solutions/supply',Metrology:'/solutions/metrology'};
+const titles={Main:'РТ-Техприёмка — решения для промышленности',Etalon:'Эталон — датчики и оборудование',Quality:'Кволити+ — сертификация, экология и обучение',Supply:'РТ-Техпоставка — снабжение предприятий',Metrology:'Метрологическая служба Ростеха | РТ-Техприёмка'};
 const esc=s=>String(s??'').replaceAll('&','&amp;').replaceAll('"','&quot;').replaceAll('<','&lt;').replaceAll('>','&gt;');
 for(const name of Object.keys(routes)){
  let source=fs.readFileSync(`source/dc-local/${name}.dc.html`,'utf8').replaceAll('../../assets/','/assets/');

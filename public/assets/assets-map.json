@@ -126,5 +126,17 @@
   "e4e41f26fd7079978f213a59450970f8": {
     "file": "assets/quality_svc4.webp",
     "role": "Кволити+: Обучение"
+  },
+  "c9059dab8ad2ed6d8c97335a6f7876bb": {
+    "file": "assets/metrology_hero.mp4",
+    "role": "Метрология: hero-видео КИМ, скраб"
+  },
+  "d26c3f4984a47ce880a170996142d7ed": {
+    "file": "assets/metrology_hero_poster.webp",
+    "role": "Метрология: постер hero"
+  },
+  "acbae56b92e57b88258e6e44bc9f981a": {
+    "file": "assets/metrology_about.webp",
+    "role": "Метрология: «О службе», последний кадр hero"
   }
 }
