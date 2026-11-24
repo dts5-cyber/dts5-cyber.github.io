@@ -448,7 +448,6 @@ class Component extends PageLogic {
       svv['exC' + k] = 'exC' + (exA === k ? ' on' : '');
       svv['exHov' + k] = function () { if ((selfE.state.ex || 0) !== k) selfE.setState({ ex: k }); };
     })(ek);
-    var tkV = this.props.tasks || 'Уровни'; svv.tkMapOn = tkV === 'Уровни'; svv.tkListOn = tkV === 'Список'; svv.tkKinOn = tkV === 'Крупно по одному';
     var selfD = this, dsel = this.state.dir;
     for (var di = 0; di < 5; di++) (function (k) { var on = dsel === k; svv['dirCls' + k] = 'chip' + (on ? ' on' : ''); svv['dirAria' + k] = on ? 'true' : 'false'; svv['dirPick' + k] = function () { selfD.setState({ dir: selfD.state.dir === k ? null : k }); }; })(di);
     var mOpen = !!this.state.M && !!this.state.menu, selfM = this;
