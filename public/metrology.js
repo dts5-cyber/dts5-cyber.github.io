@@ -432,14 +432,15 @@ class Component extends PageLogic {
     svv.mdShow = md != null; svv.mdDir = md != null ? MDN[md] : '';
     svv.mdForm = md != null && !this.state.mdSent; svv.mdDone = md != null && !!this.state.mdSent;
     svv.mdClose = function () { selfM.setState({ md: null }); };
-    svv.mdErrN = mdErr.n || ''; svv.mdErrC = mdErr.c || '';
-    svv.mdInpN = 'inp' + (mdErr.n ? ' bad' : ''); svv.mdInpC = 'inp' + (mdErr.c ? ' bad' : '');
+    svv.mdErrN = mdErr.n || ''; svv.mdErrP = mdErr.p || ''; svv.mdErrM = mdErr.m || '';
+    svv.mdInpN = 'inp' + (mdErr.n ? ' bad' : ''); svv.mdInpP = 'inp' + (mdErr.p ? ' bad' : ''); svv.mdInpM = 'inp' + (mdErr.m ? ' bad' : '');
     svv.mdSubmit = function (e) {
       e.preventDefault(); var f = e.target, er = {};
       if (!(f.mdname.value || '').trim()) er.n = 'Укажите имя';
-      var c = (f.mdcontact.value || '').trim();
-      if (!c) er.c = 'Укажите телефон или почту'; else if (!/@/.test(c) && c.replace(/\D/g, '').length < 10) er.c = 'Проверьте телефон или почту';
-      if (er.n || er.c) selfM.setState({ mdErr: er }); else selfM.setState({ mdErr: {}, mdSent: true });
+      if ((f.mdphone.value || '').replace(/\D/g, '').length < 10) er.p = 'Укажите телефон — 10–11 цифр';
+      var ml = (f.mdmail.value || '').trim();
+      if (ml && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(ml)) er.m = 'Проверьте адрес почты';
+      if (er.n || er.p || er.m) selfM.setState({ mdErr: er }); else selfM.setState({ mdErr: {}, mdSent: true });
     };
 
     var exA = this.state.ex || 0, selfE = this;
