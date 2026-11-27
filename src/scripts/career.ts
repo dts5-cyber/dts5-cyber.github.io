@@ -169,7 +169,3 @@ form.addEventListener('submit', async event => {
   } catch { status.textContent = 'Не удалось отправить резюме. Попробуй ещё раз или откликнись на hh.ru.'; }
   finally { button.disabled=false; button.textContent='Отправить резюме ↗'; form.removeAttribute('aria-busy'); }
 });
-if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
-  const observer = new IntersectionObserver(entries => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('career-reveal'); observer.unobserve(entry.target); } }); }, { threshold:.12 });
-  document.querySelectorAll('.section-heading,.federal-card,.growth-card,.story,.hiring-steps').forEach(el => observer.observe(el));
-}

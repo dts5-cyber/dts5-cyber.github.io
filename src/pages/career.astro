@@ -6,13 +6,16 @@ import { careerConfig, heroImages, directions, exampleVacancies, stories, steps,
 import CareerIcon from '../components/career/CareerIcon.astro';
 import { vacancyIcon } from '../data/career-icons';
 import '../styles/career.css';
+import '../styles/career-motion.css';
 const vacancies = careerConfig.demo ? exampleVacancies.slice(0, 3) : [];
 ---
 <Base title="Карьера — РТ-Техприёмка" description="Инженерные профессии, цифровые технологии и работа в команде РТ-Техприёмки. Демонстрационный макет карьерного раздела." pageClass="page-career" ogImage="/assets/career/career-hero.webp">
   <meta slot="head" name="robots" content="noindex, nofollow" />
+  <script slot="head" is:inline>if(!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('motion');setTimeout(function(){if(!window.__careerMotion)document.documentElement.classList.remove('motion')},3000)}</script>
   <Header />
   <main id="main">
     <section class="career-hero" aria-labelledby="career-title">
+      <div class="hero-glow" aria-hidden="true"></div>
       <div class="hero-content">
         <h1 id="career-title">Строй промышленность <span class="cu">будущего</span> <span class="hero-title-together">вместе с нами</span></h1>
         <a class="ctaA hero-cta" href="#vacancies">Смотреть вакансии <span aria-hidden="true">↗</span></a>
@@ -154,4 +157,5 @@ const vacancies = careerConfig.demo ? exampleVacancies.slice(0, 3) : [];
     <div id="career-dialog-text"></div>
   </dialog>
   <script>import '../scripts/career';</script>
+  <script>import '../scripts/career-motion';</script>
 </Base>
